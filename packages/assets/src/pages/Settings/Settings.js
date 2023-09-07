@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {Button, Card, Frame, Layout, Page, Tabs, Loading} from '@shopify/polaris';
+import {Button, Card, Layout, Page, Tabs, Loading} from '@shopify/polaris';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
 import '../../styles/pages/setting.scss';
 import SettingDisplay from '../../components/SettingDisplay/SettingDisplay';
@@ -32,7 +32,8 @@ export default function Settings() {
       content: 'Trigger',
       bodyContent: (
         <SettingTrigger
-          input={input}
+          excludedUrls={input.excludedUrls}
+          includedUrls={input.includedUrls}
           setInput={setInput}
           trigger={trigger}
           setTrigger={setTrigger}
@@ -58,7 +59,10 @@ export default function Settings() {
     >
       <Layout>
         <Layout.Section secondary>
-          <NotificationPopup input={input} />
+          <NotificationPopup
+            hideTimeAgo={input.hideTimeAgo}
+            truncateProductName={input.truncateProductName}
+          />
         </Layout.Section>
         <Layout.Section>
           <Card>
@@ -71,5 +75,3 @@ export default function Settings() {
     </Page>
   );
 }
-
-Settings.propTypes = {};

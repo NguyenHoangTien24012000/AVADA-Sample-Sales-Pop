@@ -1,8 +1,9 @@
 import React from 'react';
 import DesktopPositionInput from '../DesktopPositionInput/DesktopPositionInput';
-import {Card, Checkbox, FormLayout, Subheading, TextStyle} from '@shopify/polaris';
+import {Card, Checkbox, FormLayout, Subheading} from '@shopify/polaris';
 import './SettingDisplay.scss';
 import DesktopPositionRange from '../DesktopPositionRange/DesktopPositionRange';
+import PropTypes from 'prop-types';
 
 const defaultSelect = [
   {
@@ -50,3 +51,8 @@ export default function SettingDisplay({input, setInput}) {
     </Card.Section>
   );
 }
+
+SettingDisplay.propTypes = {
+  input: PropTypes.object,
+  setInput: PropTypes.func
+};

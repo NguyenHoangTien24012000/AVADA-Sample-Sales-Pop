@@ -2,16 +2,12 @@ import React from 'react';
 import './NoticationPopup.scss';
 import {defaultNotificationPopup, defaultSettings} from '../../const/settings';
 import {untilPresent} from '../../helpers/utils/formatFullTime';
-const a = {
-  id: 1,
-  firstName: 'John Doe',
-  city: 'New York',
-  country: 'United States',
-  productName: 'Puffer Jacket ',
-  timestamp: '2023-08-30T03:33:22.487Z',
-  productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
-};
-const NotificationPopup = ({data = defaultNotificationPopup, input = defaultSettings}) => {
+import PropTypes from 'prop-types';
+const NotificationPopup = ({
+  dataNotification = defaultNotificationPopup,
+  truncateProductName = defaultSettings.truncateProductName,
+  hideTimeAgo = defaultSettings.hideTimeAgo
+}) => {
   return (
     <div className="Avava-SP__Wrapper fadeInUp animated">
       <div className="Avava-SP__Inner">
@@ -20,21 +16,18 @@ const NotificationPopup = ({data = defaultNotificationPopup, input = defaultSett
             <div
               className="Avava-SP__Image"
               style={{
-                backgroundImage: `url(${data.productImage})`
+                backgroundImage: `url(${dataNotification.productImage})`
               }}
             ></div>
             <div className="Avada-SP__Content">
-              <div className={`Avada-SP__Title ${input.truncateProductName && 'truncate__title'}`}>
-                {data.firstName} in {data.city}, {data.country}
+              <div className={`Avada-SP__Title ${truncateProductName && 'truncate__title'}`}>
+                {dataNotification.firstName} in {dataNotification.city}, {dataNotification.country}
               </div>
-              <div
-                className={`Avada-SP__Subtitle ${input.truncateProductName &&
-                  'truncate__subtitle'}`}
-              >
-                purchased {data.productName}
+              <div className={`Avada-SP__Subtitle ${truncateProductName && 'truncate__subtitle'}`}>
+                purchased {dataNotification.productName}
               </div>
               <div className={'Avada-SP__Footer '}>
-                <div>{input.hideTimeAgo || untilPresent(data.timestamp)}</div>
+                <div>{hideTimeAgo || untilPresent(dataNotification.timestamp)}</div>
                 <span className="uni-blue">
                   <i className="fa fa-check" aria-hidden="true">
                     &#x2713;
@@ -62,6 +55,10 @@ const NotificationPopup = ({data = defaultNotificationPopup, input = defaultSett
   );
 };
 
-NotificationPopup.propTypes = {};
+NotificationPopup.propTypes = {
+  dataNotification: PropTypes.object,
+  truncateProductName: PropTypes.bool,
+  hideTimeAgo: PropTypes.bool
+};
 
 export default NotificationPopup;

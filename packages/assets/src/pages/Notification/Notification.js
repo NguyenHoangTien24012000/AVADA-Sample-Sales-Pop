@@ -46,7 +46,7 @@ const defaultNotifications = [
   }
 ];
 
-export default function Notifcations({dataNotifications = defaultNotifications}) {
+export default function Notifcations() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
 
@@ -57,7 +57,7 @@ export default function Notifcations({dataNotifications = defaultNotifications})
           <Card>
             <ResourceList
               resourceName={{singular: 'notification', plural: 'notifications'}}
-              items={dataNotifications}
+              items={defaultNotifications}
               selectedItems={selectedItems}
               onSelectionChange={setSelectedItems}
               selectable

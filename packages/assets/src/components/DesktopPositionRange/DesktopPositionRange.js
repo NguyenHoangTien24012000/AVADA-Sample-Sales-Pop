@@ -1,6 +1,7 @@
 import {FormLayout, RangeSlider, TextField} from '@shopify/polaris';
-import React, {useCallback, useState} from 'react';
+import React from 'react';
 import './DesktopPositionRange.scss';
+import PropTypes from 'prop-types';
 
 const arrRange = [
   {
@@ -95,3 +96,8 @@ export default function DesktopPositionRange({input, setInput}) {
     </>
   );
 }
+
+DesktopPositionRange.propTypes = {
+  input: PropTypes.object,
+  setInput: PropTypes.func
+};

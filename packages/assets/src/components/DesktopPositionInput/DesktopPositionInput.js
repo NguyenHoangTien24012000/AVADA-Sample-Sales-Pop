@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import './DesktopPositionInput.scss';
-import {Labelled, Stack, TextStyle} from '@shopify/polaris';
+import {Labelled, Stack} from '@shopify/polaris';
 
 const defaultOptions = [
   {label: 'Bottom left', value: 'bottom-left'},
@@ -37,7 +37,6 @@ const DesktopPositionInput = ({label, helpText, position, setInput}) => {
 
 DesktopPositionInput.propTypes = {
   label: PropTypes.string,
-  options: PropTypes.array,
   position: PropTypes.string,
   setInput: PropTypes.func,
   helpText: PropTypes.string

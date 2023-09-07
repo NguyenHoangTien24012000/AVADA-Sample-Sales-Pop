@@ -1,10 +1,15 @@
 import {Card, Select, Stack, TextField} from '@shopify/polaris';
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
+import PropTypes from 'prop-types';
 
-export default function SettingTrigger({input, setInput, trigger, setTrigger}) {
+export default function SettingTrigger({
+  includedUrls,
+  excludedUrls,
+  setInput,
+  trigger,
+  setTrigger
+}) {
   const handleSelectChange = useCallback(value => setTrigger(value), []);
-
-  const {includedUrls, excludedUrls} = input;
 
   const options = [
     {label: 'All Pages', value: '1'},
@@ -42,3 +47,11 @@ export default function SettingTrigger({input, setInput, trigger, setTrigger}) {
     </Card.Section>
   );
 }
+
+SettingTrigger.propTypes = {
+  includedUrls: PropTypes.string,
+  excludedUrls: PropTypes.string,
+  setInput: PropTypes.func,
+  trigger: PropTypes.string,
+  setTrigger: PropTypes.func
+};
