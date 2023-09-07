@@ -1,0 +1,8 @@
+.desktop-range--main {
+  display: grid;
+  grid-template-columns: calc(50% - (20px * 1 / 2)) calc(50% - (20px * 1 / 2));
+  grid-column-gap: 20px;
+}
+.desktop-range--child {
+  width: 120px;
+}

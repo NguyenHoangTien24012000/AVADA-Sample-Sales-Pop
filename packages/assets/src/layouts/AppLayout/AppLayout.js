@@ -39,12 +39,7 @@ export default function AppLayout({children}) {
         <div className={navigationClass.join(' ')}>
           <AppNavigation />
         </div>
-        <Scrollable className={contentClass.join(' ')}>
-          {children}
-          <Layout>
-            <Footer />
-          </Layout>
-        </Scrollable>
+        <Scrollable className={contentClass.join(' ')}>{children}</Scrollable>
       </div>
       {loading && <Loading />}
       {toast && <Toast onDismiss={() => closeToast(dispatch)} {...toast} />}

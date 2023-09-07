@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {Layout, Page, SettingToggle, TextStyle} from '@shopify/polaris';
+import React, {useEffect, useState} from 'react';
+import {Layout, Page, SettingToggle, TextContainer, TextStyle} from '@shopify/polaris';
 import {useStore} from '@assets/reducers/storeReducer';
+import {api} from '../../helpers';
 
 /**
  * Render a home page for overview
@@ -12,8 +13,16 @@ export default function Home() {
   const [enabled, setEnabled] = useState(false);
   const {dispatch} = useStore();
 
+  const getDataTest = async () => {
+    const data = await api('/settings');
+    console.log(data);
+  };
+
+  useEffect(() => {
+    getDataTest();
+  }, []);
   return (
-    <Page title="Dashboard">
+    <Page title="Home" fullWidth>
       <Layout>
         <Layout.Section>
           <SettingToggle
@@ -25,7 +34,10 @@ export default function Home() {
             }}
             enabled={enabled}
           >
-            <TextStyle>Our app is {enabled ? 'enabled' : 'disabled'} on your store</TextStyle>
+            <TextContainer>
+              <TextStyle>App status is </TextStyle>
+              <TextStyle variation="strong">{enabled ? 'enabled' : 'disabled'}</TextStyle>
+            </TextContainer>
           </SettingToggle>
         </Layout.Section>
       </Layout>

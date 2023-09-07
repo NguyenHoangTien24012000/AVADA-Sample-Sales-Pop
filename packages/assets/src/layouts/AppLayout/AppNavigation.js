@@ -1,7 +1,13 @@
 import React from 'react';
-import {Navigation} from '@shopify/polaris';
+import {Frame, Navigation} from '@shopify/polaris';
 import {useHistory, useLocation} from 'react-router-dom';
-import {ArrowLeftMinor, HomeMajor, SettingsMajor, ShareMinor} from '@shopify/polaris-icons';
+import {
+  ArrowLeftMinor,
+  HomeMajor,
+  SettingsMajor,
+  ShareMinor,
+  NotificationMajor
+} from '@shopify/polaris-icons';
 import '@assets/styles/layout/navigation.scss';
 import {useStore} from '@assets/reducers/storeReducer';
 import {isEmbeddedApp, prependRoute} from '@assets/config/app';
@@ -51,7 +57,7 @@ export default function AppNavigation() {
   };
 
   return (
-    <Navigation location="">
+    <Navigation location="/">
       {!isEmbeddedApp && (
         <Navigation.Section
           items={[
@@ -70,30 +76,29 @@ export default function AppNavigation() {
           {
             url: '/',
             icon: HomeMajor,
-            label: 'Dashboard',
+            label: 'Home',
             selected: location.pathname === getUrl('/'),
             onClick: () => {
               history.push('/');
             }
           },
           {
-            url: '/samples',
-            icon: ShareMinor,
-            label: 'Samples',
-            selected: location.pathname === getUrl('/samples'),
+            url: '/notifcations',
+            icon: NotificationMajor,
+            label: 'Notifcations',
+            selected: location.pathname === getUrl('/notifcations'),
             onClick: () => {
-              history.push('/samples');
+              history.push('/notifcations');
             }
-          }
-        ].reduce(prepareMenu, [])}
-      />
-      <Navigation.Section
-        separator
-        items={[
+          },
           {
             label: 'Settings',
             url: '/settings',
-            icon: SettingsMajor
+            icon: SettingsMajor,
+            selected: location.pathname === getUrl('/settings'),
+            onClick: () => {
+              history.push('/settings');
+            }
           }
         ].reduce(prepareMenu, [])}
       />

@@ -48,6 +48,14 @@ app.use(
       return (ctx.body = {
         success: true
       });
+    },
+    afterInstall: async ctx =>{
+      try {
+        const shopifyDomain = ctx.state.shopify.shop;
+        
+      } catch (error) {
+        
+      }
     }
   }).routes()
 );

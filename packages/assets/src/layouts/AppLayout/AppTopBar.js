@@ -1,5 +1,15 @@
 import React from 'react';
-import {Button, DisplayText, Icon, Link, Stack, Thumbnail, TopBar} from '@shopify/polaris';
+import {
+  Avatar,
+  Button,
+  DisplayText,
+  Icon,
+  Link,
+  Stack,
+  TextStyle,
+  Thumbnail,
+  TopBar
+} from '@shopify/polaris';
 import PropTypes from 'prop-types';
 import {
   BugMajor,
@@ -30,6 +40,11 @@ export default function AppTopBar({isNavOpen, toggleOpenNav}) {
 
   const {sheet: newsSheet, openSheet: openNewsSheet} = useConfirmSheet({Content: AppNewsSheet});
 
+  const userMenuMarkup = (
+    <TopBar.UserMenu actions={[]} name="Dharma" detail={'Avada'} initials="A" />
+  );
+  const topBarMarkup = <TopBar userMenu={userMenuMarkup} />;
+
   return (
     <TopBar
       secondaryMenu={
@@ -38,37 +53,14 @@ export default function AppTopBar({isNavOpen, toggleOpenNav}) {
             <Button plain onClick={toggleOpenNav}>
               <Icon source={isNavOpen ? MobileCancelMajor : MobileHamburgerMajor} />
             </Button>
-            <img alt="Avada App Name" src={LOGO_URL} width={LOGO_WIDTH} />
-            <DisplayText size="small">
-              <Link url="/" removeUnderline>
-                App Name
-              </Link>
-            </DisplayText>
-            {isLocal && (
-              <Stack alignment="center">
-                <Button plain url="/dev_zone" icon={BugMajor} />
-              </Stack>
-            )}
+            <img alt="Avada App Name" src={LOGO_URL} width={150} />
           </div>
           <div className="Avada-TopBar__Icons">
-            <Stack alignment="center" spacing="extraTight">
-              <Button plain url={docLink} external>
-                <Thumbnail source={InfoIcon} size="small" alt="" />
-              </Button>
-              <Button plain onClick={() => openNewsSheet()}>
-                <Thumbnail source={NotificationIcon} size="small" alt="" />
-              </Button>
+            <Stack alignment="center" spacing="tight">
+              <Avatar initials="A" name="Woluwayemisi Weun-Jung" />
+              <TextStyle variation="strong">Avada</TextStyle>
             </Stack>
           </div>
-          {isShopUpgradable(shop) && (
-            <Button url="/subscription">
-              <Stack alignment="center">
-                <Icon source={PaymentsMajor} />
-                <Stack.Item>Subscription</Stack.Item>
-              </Stack>
-            </Button>
-          )}
-          {newsSheet}
         </div>
       }
     />

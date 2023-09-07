@@ -31,6 +31,7 @@ function createEmbedApp() {
 /**
  * @return {(uri: string, options?: {headers?, body?, method?: 'GET' | 'POST' | 'PUT' | 'DELETE'}) => Promise<any>}
  */
+
 function createApi() {
   const prefix = getApiPrefix(isEmbeddedApp);
 
