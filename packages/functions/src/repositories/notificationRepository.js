@@ -1,9 +1,24 @@
-import {getFirestore} from 'firebase-admin/firestore';
+import {Firestore} from '@google-cloud/firestore';
+import {Timestamp} from 'firebase-admin/firestore';
 
-const db = getFirestore();
-const notificationsCollectionRef = db.collection('notifications');
+const firestore = new Firestore();
+const notificationsCollectionRef = firestore.collection('notifications');
 
-export const initSyncOrder = async order => {
-  const orderDocs = await notificationsCollectionRef.add(order);
-  return orderDocs.id;
-};
+export async function initSyncOrderNotification(order) {
+  const notificationDocs = await notificationsCollectionRef.add(order);
+  return notificationDocs.id;
+}
+
+export async function getNotifications() {
+  const notificationDocs = await notificationsCollectionRef.get();
+  if (notificationDocs.empty) {
+    return null;
+  }
+  const result = [];
+  notificationDocs.forEach(notification => {
+    const data = notification.data();
+    const {timestamp} = data;
+    result.push({...data, timestamp: timestamp._seconds * 1000});
+  });
+  return result;
+}

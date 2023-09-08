@@ -1,14 +1,8 @@
-import admin from 'firebase-admin';
-import {getFirestore} from 'firebase-admin/firestore';
-import serviceAccount from '../../serviceAccount.development.json';
+import {Firestore} from '@google-cloud/firestore';
 import settingDefaultApp from '../const/defaultDataSetting';
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
-});
-
-const db = getFirestore();
-const settingCollectionRef = db.collection('settings');
+const firestore = new Firestore();
+const settingCollectionRef = firestore.collection('settings');
 
 export async function getSettings(shopId) {
   const settingDocs = await settingCollectionRef

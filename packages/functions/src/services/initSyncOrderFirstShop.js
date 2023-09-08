@@ -1,17 +1,14 @@
 import Shopify from 'shopify-api-node';
-import {getShopByShopifyDomain} from '@avada/shopify-auth';
-import {initSyncOrder} from '../repositories/notificationRepository';
-export default async function initSyncOrderFirstShop(ctx) {
+import {initSyncOrderNotification} from '../repositories/NotificationRepository';
+
+export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
   try {
-    const {shopifyDomain} = ctx.state.user.shop;
-    const shop = await getShopByShopifyDomain(shopifyDomain);
     const shopify = new Shopify({
       shopName: shopifyDomain,
       accessToken: shop.accessToken
     });
-
     const query = `{
-        orders(first: 2) {
+        orders(first: 30) {
           edges {
             node {
               id
@@ -25,8 +22,8 @@ export default async function initSyncOrderFirstShop(ctx) {
                 edges {
                   node {
                     title
+                    id
                     product {
-                      id
                       featuredImage {
                         url
                       }
@@ -50,21 +47,22 @@ export default async function initSyncOrderFirstShop(ctx) {
       const {
         node: {
           title,
+          id,
           product: {
-            id,
             featuredImage: {url}
           }
         }
       } = edges[0];
       const shopId = shop.id;
-      return initSyncOrder({
+
+      return initSyncOrderNotification({
         firstName,
         city,
         country,
-        createdAt,
-        id,
-        url,
-        title,
+        timestamp: new Date(createdAt),
+        productId: parseInt(/[0-9]{10,}$/g.exec(id)[0]),
+        productName: title,
+        productImage: url,
         shopId,
         shopDomain: shopifyDomain
       });

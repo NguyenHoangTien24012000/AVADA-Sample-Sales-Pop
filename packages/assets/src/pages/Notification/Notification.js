@@ -13,6 +13,8 @@ import React, {useState} from 'react';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
 import '../../styles/pages/notification.scss';
 import {formatDateMonthYear} from '../../helpers/utils/formatFullTime';
+import useFetchApi from '../../hooks/api/useFetchApi';
+import {Loading} from '@shopify/polaris';
 
 const DATE_MODIFIED_DESC = 'DATE_MODIFIED_DESC';
 const DATE_MODIFIED_ASC = 'DATE_MODIFIED_ASC';
@@ -50,14 +52,20 @@ export default function Notifcations() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
 
+  const {loading, data: notification, setData: setNotification} = useFetchApi({
+    url: '/notifications',
+    defaultData: defaultNotifications
+  });
+  if (loading) return <Loading />;
   return (
     <Page title="Notification" fullWidth subtitle="List of sales notification from Shopify">
       <Layout>
         <Layout.Section>
           <Card>
             <ResourceList
+              idForItem={item => item.productId}
               resourceName={{singular: 'notification', plural: 'notifications'}}
-              items={defaultNotifications}
+              items={notification}
               selectedItems={selectedItems}
               onSelectionChange={setSelectedItems}
               selectable
@@ -71,13 +79,14 @@ export default function Notifcations() {
                 console.log(`Sort option changed to ${selected}.`);
               }}
               renderItem={notification => {
-                const {id, timestamp} = notification;
+                const {productId, timestamp} = notification;
                 const {date, month, year} = formatDateMonthYear(timestamp);
+                console.log(productId);
                 return (
-                  <ResourceItem id={id}>
+                  <ResourceItem id={productId}>
                     <Stack distribution="equalSpacing">
                       <Stack.Item fill>
-                        <NotificationPopup />
+                        <NotificationPopup dataNotification={notification} />
                       </Stack.Item>
                       <Stack.Item>
                         <TextContainer>
