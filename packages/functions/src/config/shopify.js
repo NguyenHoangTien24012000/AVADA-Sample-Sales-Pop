@@ -10,6 +10,8 @@ export default {
     'read_themes',
     'write_themes',
     'read_orders',
-    'read_products'
+    'read_products',
+    'read_script_tags',
+    'write_script_tags'
   ]
 };

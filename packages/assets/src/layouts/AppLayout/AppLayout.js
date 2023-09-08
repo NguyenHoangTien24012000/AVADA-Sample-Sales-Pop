@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import {Frame, Layout, Loading, Scrollable, Toast} from '@shopify/polaris';
+import {Frame, Loading, Scrollable, Toast} from '@shopify/polaris';
 import PropTypes from 'prop-types';
 import {useStore} from '@assets/reducers/storeReducer';
 import {closeToast} from '@assets/actions/storeActions';
 import AppTopBar from '@assets/layouts/AppLayout/AppTopBar';
 import AppNavigation from '@assets/layouts/AppLayout/AppNavigation';
 import {isEmbeddedApp} from '@assets/config/app';
-import Footer from '@assets/components/Footer/Footer';
-
 /**
  * Render an app layout
  *

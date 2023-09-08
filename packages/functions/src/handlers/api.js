@@ -15,7 +15,7 @@ const verifyEmbedConfig = {
   returnHeader: true,
   apiKey: shopifyConfig.apiKey,
   scopes: shopifyConfig.scopes,
-
+  
   secret: shopifyConfig.secret,
   hostName: appConfig.baseUrl,
   isEmbeddedApp: true

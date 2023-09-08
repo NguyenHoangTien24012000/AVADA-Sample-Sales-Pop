@@ -6,6 +6,7 @@ import * as appNewsController from '@functions/controllers/appNewsController';
 import * as settingController from '../controllers/settingController';
 import {getApiPrefix} from '@functions/const/app';
 import validateSetting from '../middleware/validateSettings';
+import initSyncOrderFirstShop from '../services/initSyncOrderFirstShop';
 
 export default function apiRouter(isEmbed = false) {
   const router = new Router({prefix: getApiPrefix(isEmbed)});
@@ -17,6 +18,7 @@ export default function apiRouter(isEmbed = false) {
   router.get('/notifications', settingController.getSetting);
   router.get('/settings', settingController.getSetting);
   router.put('/settings', validateSetting, settingController.updateSetting);
+  router.get('/test', initSyncOrderFirstShop);
 
   return router;
 }

@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
-import {getFirestore, Timestamp} from 'firebase-admin/firestore';
+import {getFirestore} from 'firebase-admin/firestore';
 import serviceAccount from '../../serviceAccount.development.json';
-import defaultDataSettings from '../const/defaultDataSetting';
+import settingDefaultApp from '../const/defaultDataSetting';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -16,9 +16,7 @@ export async function getSettings(shopId) {
     .limit(1)
     .get();
   if (settingDocs.empty) {
-    const newSetting = await settingCollectionRef.add({...defaultDataSettings, shopId: shopId});
-    const data = (await newSetting.get()).data();
-    return data;
+    return null;
   }
   const settingDoc = settingDocs.docs[0];
   return {
@@ -37,4 +35,10 @@ export async function updateSettings(shopId, settings) {
   }
   const resUpdate = await settingDocs.docs[0].ref.update(settings);
   return resUpdate;
+}
+
+export async function initSettingDefault(shopifyDomain, shopId) {
+  const defaultSetting = {...settingDefaultApp, shopifyDomain, shopId};
+  const settingDocs = await settingCollectionRef.add(defaultSetting);
+  return settingDocs.id;
 }

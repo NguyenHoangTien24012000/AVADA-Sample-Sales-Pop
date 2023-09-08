@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Layout, Page, SettingToggle, TextContainer, TextStyle} from '@shopify/polaris';
-import {useStore} from '@assets/reducers/storeReducer';
-import {api} from '../../helpers';
+// import {useStore} from '@assets/reducers/storeReducer';
+// import {api} from '../../helpers';
 
 /**
  * Render a home page for overview
@@ -11,16 +11,16 @@ import {api} from '../../helpers';
  */
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
-  const {dispatch} = useStore();
+  // const {dispatch} = useStore();
 
-  const getDataTest = async () => {
-    const data = await api('/settings');
-    console.log(data);
-  };
+  // const getDataTest = async () => {
+  //   const data = await api('/test');
+  //   console.log(data);
+  // };
 
-  useEffect(() => {
-    getDataTest();
-  }, []);
+  // useEffect(() => {
+  //   getDataTest();
+  // }, []);
   return (
     <Page title="Home" fullWidth>
       <Layout>

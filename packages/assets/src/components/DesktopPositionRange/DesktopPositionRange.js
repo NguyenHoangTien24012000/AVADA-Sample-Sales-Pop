@@ -90,10 +90,10 @@ export default function DesktopPositionRange({input, setInput}) {
   };
 
   return (
-    <>
+    <FormLayout>
       <FormLayout.Group>{renderRange(GROUP_1)}</FormLayout.Group>
       <FormLayout.Group>{renderRange(GROUP_2)}</FormLayout.Group>
-    </>
+    </FormLayout>
   );
 }
 
