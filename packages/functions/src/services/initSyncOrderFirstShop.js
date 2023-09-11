@@ -7,6 +7,7 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
       shopName: shopifyDomain,
       accessToken: shop.accessToken
     });
+    //todo chỗ này mình lấy order mới nhấ nên có sort UPDATED_AT, có thể đảo chiều nhờ biến reverse nhé
     const query = `{
         orders(first: 30) {
           edges {
@@ -37,6 +38,7 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
       }`;
     const data = await shopify.graphql(query);
     const arrFuncSyncFirestore = data.orders.edges.map(order => {
+      // todo lấy biến ntn nên check trc giá trị nhé ko bị undefined là chạy vào err luôn ấy
       const {
         node: {
           billingAddress: {firstName, city, country},
@@ -70,5 +72,6 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
     await Promise.all(arrFuncSyncFirestore);
   } catch (error) {
     console.error(error);
+    
   }
 }
