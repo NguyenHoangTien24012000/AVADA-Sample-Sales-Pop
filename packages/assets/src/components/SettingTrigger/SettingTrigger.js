@@ -2,18 +2,13 @@ import {Card, Select, Stack, TextField} from '@shopify/polaris';
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 
-export default function SettingTrigger({
-  includedUrls,
-  excludedUrls,
-  setInput,
-  trigger,
-  setTrigger
-}) {
-  const handleSelectChange = useCallback(value => setTrigger(value), []);
-//todo để value thường giống với tên label. Để 1 với 2 đọc code tối nghĩa quá
+export default function SettingTrigger({includedUrls, excludedUrls, setInput, input}) {
+  const handleSelectChange = value => {
+    setInput(prev => ({...prev, allowShow: value}));
+  };
   const options = [
-    {label: 'All Pages', value: '1'},
-    {label: 'Specific Pages', value: '2'}
+    {label: 'All Pages', value: 'all'},
+    {label: 'Specific Pages', value: 'specific'}
   ];
 
   const handleChange = (newValue, key) => {
@@ -22,8 +17,8 @@ export default function SettingTrigger({
   return (
     <Card.Section title="PAGES RESTRICTION" sectioned>
       <Stack vertical>
-        <Select options={options} onChange={handleSelectChange} value={trigger} />
-        {trigger === '2' && (
+        <Select options={options} onChange={handleSelectChange} value={input.allowShow} />
+        {input.allowShow === 'all' && (
           <TextField
             id="includedUrls"
             label="Included pages"
@@ -52,6 +47,5 @@ SettingTrigger.propTypes = {
   includedUrls: PropTypes.string,
   excludedUrls: PropTypes.string,
   setInput: PropTypes.func,
-  trigger: PropTypes.string,
-  setTrigger: PropTypes.func
+  input: PropTypes.object
 };

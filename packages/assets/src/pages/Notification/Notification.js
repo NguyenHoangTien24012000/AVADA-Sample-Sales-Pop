@@ -15,46 +15,19 @@ import '../../styles/pages/notification.scss';
 import {formatDateMonthYear} from '../../helpers/utils/formatFullTime';
 import useFetchApi from '../../hooks/api/useFetchApi';
 import {Loading} from '@shopify/polaris';
+import {defaultDataNotifications} from '../../const/settings/defaultDataNotification';
 
 const DATE_MODIFIED_DESC = 'DATE_MODIFIED_DESC';
 const DATE_MODIFIED_ASC = 'DATE_MODIFIED_ASC';
-const defaultNotifications = [
-  {
-    id: 1,
-    firstName: 'John Doe',
-    city: 'New York',
-    country: 'United States',
-    productName: 'Puffer Jacket ',
-    timestamp: '2023-08-30T03:33:22.487Z',
-    productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
-  },
-  {
-    id: 2,
-    firstName: 'John Doe',
-    city: 'New York',
-    country: 'United States',
-    productName: 'Puffer Jacket ',
-    timestamp: '2023-08-30T03:33:22.487Z',
-    productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
-  },
-  {
-    id: 3,
-    firstName: 'John Doe',
-    city: 'New York',
-    country: 'United States',
-    productName: 'Puffer Jacket ',
-    timestamp: '2023-08-30T03:33:22.487Z',
-    productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
-  }
-];
 //todo tải Spell Checker về nhé sai chính tả rồi
+
 export default function Notifcations() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
 //todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi
   const {loading, data: notification, setData: setNotification} = useFetchApi({
     url: '/notifications',
-    defaultData: defaultNotifications
+    defaultData: defaultDataNotifications
   });
   if (loading) return <Loading />;
   return (
@@ -76,7 +49,6 @@ export default function Notifcations() {
               ]}
               onSortChange={selected => {
                 setSortValue(selected);
-                console.log(`Sort option changed to ${selected}.`);
               }}
               renderItem={notification => {
                 const {productId, timestamp} = notification;

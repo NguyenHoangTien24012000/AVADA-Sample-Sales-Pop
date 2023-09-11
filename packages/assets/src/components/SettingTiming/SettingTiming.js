@@ -1,6 +1,6 @@
 import {FormLayout, RangeSlider, TextField} from '@shopify/polaris';
 import React from 'react';
-import './DesktopPositionRange.scss';
+import './SettingTiming.scss';
 import PropTypes from 'prop-types';
 
 const arrRange = [
@@ -38,7 +38,7 @@ const arrRange = [
 const GROUP_1 = 'GROUP_1';
 const GROUP_2 = 'GROUP_2';
 
-export default function DesktopPositionRange({input, setInput}) {
+export default function SettingTiming({input, setInput}) {
   const handleRangeSliderChange = (value, name, min = 0, max = 100) => {
     if (!/^[0-9]+$/g.test(value)) {
       setInput(prev => ({...prev, [name]: min}));
@@ -48,22 +48,25 @@ export default function DesktopPositionRange({input, setInput}) {
     if (valueParse < min) {
       setInput(prev => ({...prev, [name]: min}));
       return;
-    } else if (valueParse > max) {
+    }
+    if (valueParse > max) {
       setInput(prev => ({...prev, [name]: max}));
       return;
     }
     setInput(prev => ({...prev, [name]: value}));
   };
 
-  const renderRange = group => {
-    let newArrRange = [];
+  function getRanges(group) {
     if (group === GROUP_1) {
-      newArrRange = arrRange.slice(0, 2);
-      // todo hạn chế viết else if mà hãy viết if thôi nhá
-    } else if (group === GROUP_2) {
-      newArrRange = arrRange.slice(2, 4);
+      return arrRange.slice(0, 2);
     }
-    return newArrRange.map((item, index) => {
+    if (group === GROUP_2) {
+      return arrRange.slice(2, 4);
+    }
+  }
+
+  const renderRange = group => {
+    return getRanges(group).map((item, index) => {
       return (
         <RangeSlider
           min={item.min}
@@ -98,7 +101,7 @@ export default function DesktopPositionRange({input, setInput}) {
   );
 }
 
-DesktopPositionRange.propTypes = {
+SettingTiming.propTypes = {
   input: PropTypes.object,
   setInput: PropTypes.func
 };

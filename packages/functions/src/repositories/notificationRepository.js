@@ -1,5 +1,4 @@
 import {Firestore} from '@google-cloud/firestore';
-import {Timestamp} from 'firebase-admin/firestore';
 
 const firestore = new Firestore();
 const notificationsCollectionRef = firestore.collection('notifications');

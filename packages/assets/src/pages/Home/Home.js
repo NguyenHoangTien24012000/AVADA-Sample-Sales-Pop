@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Layout, Page, SettingToggle, TextContainer, TextStyle} from '@shopify/polaris';
-import {api} from '../../helpers';
+// import {api} from '../../helpers';
 
 /**
  * Render a home page for overview
@@ -11,14 +11,14 @@ import {api} from '../../helpers';
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
   // todo: test thì xóa đi nhé
-  const getDataTest = async () => {
-    const data = await api('/notifications');
-    console.log(data);
-  };
+  // const getDataTest = async () => {
+  //   const data = await api('/notifications');
+  //   console.log(data);
+  // };
 
-  useEffect(() => {
-    getDataTest();
-  }, []);
+  // useEffect(() => {
+  //   getDataTest();
+  // }, []);
   return (
     <Page title="Home" fullWidth>
       <Layout>
