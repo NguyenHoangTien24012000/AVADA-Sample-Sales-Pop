@@ -43,17 +43,13 @@ export default function Settings() {
   const {editing, handleEdit} = useEditApi({url: '/settings'});
 
   if (loading) return <Loading />;
-//todo cái primaryAction nó là button rồi mà nhỉ
+  //todo cái primaryAction nó là button rồi mà nhỉ
   return (
     <Page
       subtitle="Decide how your notifications will display"
       fullWidth
       title="Settings"
-      primaryAction={
-        <Button primary loading={editing} onClick={() => handleEdit(input)}>
-          Save
-        </Button>
-      }
+      primaryAction={{content: 'Save', loading: {editing}}}
     >
       <Layout>
         <Layout.Section secondary>

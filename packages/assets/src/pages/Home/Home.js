@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Layout, Page, SettingToggle, TextContainer, TextStyle} from '@shopify/polaris';
 // import {api} from '../../helpers';
 

@@ -24,8 +24,8 @@ const DATE_MODIFIED_ASC = 'DATE_MODIFIED_ASC';
 export default function Notifcations() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
-//todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi
-  const {loading, data: notification, setData: setNotification} = useFetchApi({
+  //todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi
+  const {loading, data: notification} = useFetchApi({
     url: '/notifications',
     defaultData: defaultDataNotifications
   });
@@ -77,13 +77,13 @@ export default function Notifcations() {
           <Stack distribution="center">
             <Pagination
               hasPrevious
-              onPrevious={() => {
-                console.log('Previous');
-              }}
-              hasNext
-              onNext={() => {
-                console.log('Next');
-              }}
+              // onPrevious={() => {
+              //   console.log('Previous');
+              // }}
+              // hasNext
+              // onNext={() => {
+              //   console.log('Next');
+              // }}
             />
           </Stack>
         </Layout.Section>

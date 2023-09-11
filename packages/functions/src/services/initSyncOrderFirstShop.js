@@ -72,6 +72,5 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
     await Promise.all(arrFuncSyncFirestore);
   } catch (error) {
     console.error(error);
-    
   }
 }
