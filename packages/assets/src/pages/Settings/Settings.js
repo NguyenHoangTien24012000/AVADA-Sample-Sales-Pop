@@ -49,7 +49,13 @@ export default function Settings() {
       subtitle="Decide how your notifications will display"
       fullWidth
       title="Settings"
-      primaryAction={{content: 'Save', loading: {editing}}}
+      primaryAction={{
+        content: 'Save',
+        loading: editing,
+        onAction: () => {
+          handleEdit(input);
+        }
+      }}
     >
       <Layout>
         <Layout.Section secondary>

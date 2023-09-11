@@ -21,10 +21,9 @@ export async function getSetting(ctx) {
 export async function updateSetting(ctx) {
   try {
     const {data} = ctx.req.body;
-    const shopId = getCurrentShop(ctx);
-    const resUpdate = await settingRepository.updateSettings(shopId, data);
+    const resUpdate = await settingRepository.updateSettings(data);
     if (resUpdate === null) {
-      ctx.status = 500;
+      ctx.status = 404;
       return (ctx.body = {
         success: false,
         data: {}

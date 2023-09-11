@@ -19,9 +19,9 @@ import {defaultDataNotifications} from '../../const/settings/defaultDataNotifica
 
 const DATE_MODIFIED_DESC = 'DATE_MODIFIED_DESC';
 const DATE_MODIFIED_ASC = 'DATE_MODIFIED_ASC';
-//todo tải Spell Checker về nhé sai chính tả rồi
 
-export default function Notifcations() {
+//todo tải Spell Checker về nhé sai chính tả rồi
+export default function Notifications() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
   //todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi

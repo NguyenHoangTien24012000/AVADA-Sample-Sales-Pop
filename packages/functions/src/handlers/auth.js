@@ -7,7 +7,7 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
-import initDefaultApp from '../services/initDefaultApp';
+import afterInstallApp from '../services/afterInstallApp';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();
@@ -50,7 +50,7 @@ app.use(
         success: true
       });
     },
-    afterInstall: ctx => initDefaultApp(ctx)
+    afterInstall: ctx => afterInstallApp(ctx)
   }).routes()
 );
 

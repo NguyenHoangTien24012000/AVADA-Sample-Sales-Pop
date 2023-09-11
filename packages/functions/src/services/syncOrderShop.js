@@ -1,7 +1,7 @@
 import Shopify from 'shopify-api-node';
-import {initSyncOrderNotification} from '../repositories/NotificationRepository';
+import {addOrder} from '../repositories/NotificationRepository';
 
-export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
+export default async function syncOrderShop(shop, shopifyDomain) {
   try {
     const shopify = new Shopify({
       shopName: shopifyDomain,
@@ -9,7 +9,7 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
     });
     //todo chỗ này mình lấy order mới nhấ nên có sort UPDATED_AT, có thể đảo chiều nhờ biến reverse nhé
     const query = `{
-        orders(first: 30) {
+        orders(first: 30, sortKey:UPDATED_AT) {
           edges {
             node {
               id
@@ -38,7 +38,7 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
       }`;
     const data = await shopify.graphql(query);
     const arrFuncSyncFirestore = data.orders.edges.map(order => {
-      // todo lấy biến ntn nên check trc giá trị nhé ko bị undefined là chạy vào err luôn ấy
+      //todo lấy biến ntn nên check trc giá trị nhé ko bị undefined là chạy vào err luôn ấy
       const {
         node: {
           billingAddress: {firstName, city, country},
@@ -56,8 +56,12 @@ export default async function initSyncOrderFirstShop(shop, shopifyDomain) {
         }
       } = edges[0];
       const shopId = shop.id;
+      if (!firstName || !city || !country || !title || !id || !url || !createdAt) {
+        console.error('Dữ liệu không hợp lệ trong order:', order);
+        return null;
+      }
 
-      return initSyncOrderNotification({
+      return addOrder({
         firstName,
         city,
         country,
