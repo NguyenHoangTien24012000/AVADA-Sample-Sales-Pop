@@ -12,7 +12,6 @@ import defaultSettings from '../../const/settings/defaultSetting';
  */
 export default function Settings() {
   const [selected, setSelected] = useState(0);
-  const [trigger, setTrigger] = useState('1');
 
   const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
 
@@ -34,9 +33,8 @@ export default function Settings() {
         <SettingTrigger
           excludedUrls={input.excludedUrls}
           includedUrls={input.includedUrls}
+          input={input}
           setInput={setInput}
-          trigger={trigger}
-          setTrigger={setTrigger}
         />
       )
     }

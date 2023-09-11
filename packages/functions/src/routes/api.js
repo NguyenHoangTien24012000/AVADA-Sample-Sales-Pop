@@ -7,7 +7,6 @@ import * as settingController from '../controllers/settingController';
 import * as notificationController from '../controllers/notificationController';
 import {getApiPrefix} from '@functions/const/app';
 import validateSetting from '../middleware/validateSettings';
-import initSyncOrderFirstShop from '../services/initSyncOrderFirstShop';
 
 export default function apiRouter(isEmbed = false) {
   const router = new Router({prefix: getApiPrefix(isEmbed)});
