@@ -10,7 +10,7 @@ export default function SettingTrigger({
   setTrigger
 }) {
   const handleSelectChange = useCallback(value => setTrigger(value), []);
-
+//todo để value thường giống với tên label. Để 1 với 2 đọc code tối nghĩa quá
   const options = [
     {label: 'All Pages', value: '1'},
     {label: 'Specific Pages', value: '2'}

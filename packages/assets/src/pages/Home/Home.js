@@ -10,7 +10,7 @@ import {api} from '../../helpers';
  */
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
-
+  // todo: test thì xóa đi nhé
   const getDataTest = async () => {
     const data = await api('/notifications');
     console.log(data);

@@ -1,6 +1,7 @@
 import {initSettingDefault} from '../repositories/settingRepository';
 import {getShopByShopifyDomain} from '@avada/shopify-auth';
 import initSyncOrderFirstShop from './initSyncOrderFirstShop';
+//todo đặt tên afterInstall thì hợp lý hơn nhá
 export default async function initDefaultApp(ctx) {
   try {
     const shopifyDomain = ctx.state.shopify.shop;

@@ -59,6 +59,7 @@ export default function DesktopPositionRange({input, setInput}) {
     let newArrRange = [];
     if (group === GROUP_1) {
       newArrRange = arrRange.slice(0, 2);
+      // todo hạn chế viết else if mà hãy viết if thôi nhá
     } else if (group === GROUP_2) {
       newArrRange = arrRange.slice(2, 4);
     }

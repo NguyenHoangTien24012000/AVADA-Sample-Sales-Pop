@@ -47,11 +47,11 @@ const defaultNotifications = [
     productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
   }
 ];
-
+//todo tải Spell Checker về nhé sai chính tả rồi
 export default function Notifcations() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
-
+//todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi
   const {loading, data: notification, setData: setNotification} = useFetchApi({
     url: '/notifications',
     defaultData: defaultNotifications

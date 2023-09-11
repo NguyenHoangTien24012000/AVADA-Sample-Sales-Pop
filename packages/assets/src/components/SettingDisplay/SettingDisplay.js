@@ -42,7 +42,7 @@ export default function SettingDisplay({input, setInput}) {
         helpText={'The display position of the pop on your website'}
         position={input.position}
         setInput={setInput}
-      ></DesktopPositionInput>
+     />
       {renderCheckBox()}
       <Subheading>TIMING</Subheading>
       <DesktopPositionRange input={input} setInput={setInput} />
