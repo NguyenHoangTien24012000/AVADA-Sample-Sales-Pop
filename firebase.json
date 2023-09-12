@@ -56,6 +56,10 @@
         "destination": "/embed.html"
       },
       {
+        "source": "/webhook/**",
+        "function": "webhook"
+      },
+      {
         "source": "**",
         "destination": "/standalone.html"
       }

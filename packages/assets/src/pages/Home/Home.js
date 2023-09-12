@@ -10,15 +10,7 @@ import {Layout, Page, SettingToggle, TextContainer, TextStyle} from '@shopify/po
  */
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
-  // todo: test thì xóa đi nhé
-  // const getDataTest = async () => {
-  //   const data = await api('/notifications');
-  //   console.log(data);
-  // };
 
-  // useEffect(() => {
-  //   getDataTest();
-  // }, []);
   return (
     <Page title="Home" fullWidth>
       <Layout>
