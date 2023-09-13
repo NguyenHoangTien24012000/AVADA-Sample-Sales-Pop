@@ -1,6 +1,7 @@
 import {
   Card,
   Layout,
+  Loading,
   Page,
   Pagination,
   ResourceItem,
@@ -13,52 +14,68 @@ import React, {useState} from 'react';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
 import '../../styles/pages/notification.scss';
 import {formatDateMonthYear} from '../../helpers/utils/formatFullTime';
-import useFetchApi from '../../hooks/api/useFetchApi';
-import {Loading} from '@shopify/polaris';
+import usePaginate from '../../hooks/api/usePaginate';
 import {defaultDataNotifications} from '../../const/settings/defaultDataNotification';
 
-const DATE_MODIFIED_DESC = 'DATE_MODIFIED_DESC';
-const DATE_MODIFIED_ASC = 'DATE_MODIFIED_ASC';
+const DATE_MODIFIED_DESC = 'createdAt:desc';
+const DATE_MODIFIED_ASC = 'createdAt:asc';
 
-//todo tải Spell Checker về nhé sai chính tả rồi
 export default function Notification() {
   const [selectedItems, setSelectedItems] = useState([]);
-  const [sortValue, setSortValue] = useState(DATE_MODIFIED_ASC);
-  //todo clean lại code 1 lần nữa biến + log + file, folder không cần thiết thì xóa đi
-  const {loading, data: notification} = useFetchApi({
+  const {
+    prevPage,
+    nextPage,
+    onQueryChange,
+    data: dataNotifications,
+    loading,
+    sort,
+    fetched,
+    pageInfo
+  } = usePaginate({
     url: '/notifications',
-    defaultData: defaultDataNotifications
+    defaultData: defaultDataNotifications,
+    defaultLimit: 5,
+    defaultSort: DATE_MODIFIED_DESC
   });
-  if (loading) return <Loading />;
+  console.log(dataNotifications, pageInfo);
+  const changeSortData = async sort => {
+    onQueryChange('sort', sort, true);
+  };
+
+  if (!fetched) return <Loading />;
+
   return (
     <Page title="Notification" fullWidth subtitle="List of sales notification from Shopify">
       <Layout>
         <Layout.Section>
           <Card>
             <ResourceList
+              loading={loading}
               idForItem={item => item.productId}
               resourceName={{singular: 'notification', plural: 'notifications'}}
-              items={notification}
+              items={dataNotifications}
               selectedItems={selectedItems}
               onSelectionChange={setSelectedItems}
               selectable
-              sortValue={sortValue}
+              sortValue={sort}
               sortOptions={[
-                {label: 'Newest update', value: DATE_MODIFIED_ASC},
-                {label: 'Oldest update', value: DATE_MODIFIED_DESC}
+                {label: 'Newest update', value: DATE_MODIFIED_DESC},
+                {label: 'Oldest update', value: DATE_MODIFIED_ASC}
               ]}
-              onSortChange={selected => {
-                setSortValue(selected);
-              }}
+              onSortChange={changeSortData}
               renderItem={notification => {
                 const {productId, timestamp} = notification;
-                const {date, month, year} = formatDateMonthYear(timestamp);
-                console.log(productId);
+                const {date, month, year} = formatDateMonthYear(timestamp._seconds * 1000);
                 return (
                   <ResourceItem id={productId}>
                     <Stack distribution="equalSpacing">
                       <Stack.Item fill>
-                        <NotificationPopup dataNotification={notification} />
+                        <NotificationPopup
+                          dataNotification={{
+                            ...notification,
+                            timestamp: notification.timestamp._seconds * 1000
+                          }}
+                        />
                       </Stack.Item>
                       <Stack.Item>
                         <TextContainer>
@@ -76,14 +93,10 @@ export default function Notification() {
         <Layout.Section>
           <Stack distribution="center">
             <Pagination
-              hasPrevious
-              // onPrevious={() => {
-              //   console.log('Previous');
-              // }}
-              // hasNext
-              // onNext={() => {
-              //   console.log('Next');
-              // }}
+              hasPrevious={pageInfo?.hasPre}
+              hasNext={pageInfo?.hasNext}
+              onPrevious={prevPage}
+              onNext={nextPage}
             />
           </Stack>
         </Layout.Section>

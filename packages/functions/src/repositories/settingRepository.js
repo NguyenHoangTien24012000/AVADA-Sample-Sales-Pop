@@ -19,7 +19,6 @@ export async function getSettings(shopId) {
   };
 }
 
-//todo nên update theo setting id
 export async function updateSettings(settings) {
   const {id} = settings;
   const settingDocs = settingCollectionRef.doc(id);
@@ -29,7 +28,6 @@ export async function updateSettings(settings) {
   const resUpdate = await settingDocs.update(settings);
   return resUpdate;
 }
-//todo ntn là lúc nào install app cũng tạo mới thì mình lấy setting nào . Check lại nhá
 export async function initSettingDefault(shopifyDomain, shopId) {
   const settingDocs = await settingCollectionRef
     .where('shopId', '==', shopId)

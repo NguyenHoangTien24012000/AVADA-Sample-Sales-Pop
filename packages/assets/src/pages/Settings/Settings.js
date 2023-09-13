@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {Button, Card, Layout, Page, Tabs, Loading} from '@shopify/polaris';
+import {Card, Layout, Page, Tabs, Loading} from '@shopify/polaris';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
 import '../../styles/pages/setting.scss';
 import SettingDisplay from '../../components/SettingDisplay/SettingDisplay';
@@ -43,7 +43,6 @@ export default function Settings() {
   const {editing, handleEdit} = useEditApi({url: '/settings'});
 
   if (loading) return <Loading />;
-  //todo cái primaryAction nó là button rồi mà nhỉ
   return (
     <Page
       subtitle="Decide how your notifications will display"

@@ -1,10 +1,15 @@
+import {getCurrentShop} from '../helpers/auth';
 import * as notificationRepository from '../repositories/notificationRepository';
 export async function getNotifications(ctx) {
   try {
-    const notifications = await notificationRepository.getNotifications();
+    const shopId = getCurrentShop(ctx);
+    const objQuery = ctx.query;
+
+    const {data, hasNext, hasPre} = await notificationRepository.getNotifications(shopId, objQuery);
     return (ctx.body = {
       success: true,
-      data: notifications
+      data,
+      pageInfo: {hasNext, hasPre}
     });
   } catch (error) {
     ctx.status = 404;

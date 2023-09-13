@@ -3,12 +3,13 @@ import formatDataNotification from '../helpers/formatDataNotification';
 import Shopify from 'shopify-api-node';
 
 export async function orderWebHook(shopifyDomain, paramQueryOrder) {
-  const shop = await getShopByShopifyDomain(shopifyDomain);
-  const shopify = new Shopify({
-    shopName: shopifyDomain,
-    accessToken: shop.accessToken
-  });
   try {
+    const shop = await getShopByShopifyDomain(shopifyDomain);
+    const shopify = new Shopify({
+      shopName: shopifyDomain,
+      accessToken: shop.accessToken
+    });
+
     const query = `{
             order(id: "${paramQueryOrder}") {
               id

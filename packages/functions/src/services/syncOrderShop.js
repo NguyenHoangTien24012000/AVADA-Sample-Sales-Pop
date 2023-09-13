@@ -37,12 +37,13 @@ export default async function syncOrderShop(shopifyDomain, shop) {
       shopName: shopifyDomain,
       accessToken: shop.accessToken
     });
-    //todo chỗ này mình lấy order mới nhấ nên có sort UPDATED_AT, có thể đảo chiều nhờ biến reverse nhé
 
     const data = await shopify.graphql(query);
-    const orders = data.orders;
-    orders.edges.map(order => {
-      //todo lấy biến ntn nên check trc giá trị nhé ko bị undefined là chạy vào err luôn ấy
+    const dataResult = data?.orders.edges;
+    if (!dataResult) {
+      return null;
+    }
+    const arrSyncNotifications = dataResult.map(order => {
       const {node} = order;
       const shopId = shop.id;
       const dataNotification = formatDataNotification(node, shopId, shopifyDomain);
@@ -51,7 +52,7 @@ export default async function syncOrderShop(shopifyDomain, shop) {
       }
       return addNotification(dataNotification);
     });
-    await Promise.all(arrFuncSyncFirestore);
+    await Promise.all(arrSyncNotifications);
   } catch (error) {
     console.error(error);
   }

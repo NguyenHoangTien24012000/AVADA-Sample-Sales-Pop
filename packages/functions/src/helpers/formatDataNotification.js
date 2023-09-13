@@ -1,5 +1,8 @@
+import parseId from './parseId';
+
 export default function formatDataNotification(order, shopId, shopDomain) {
   const {
+    id: orderId,
     billingAddress: {firstName, city, country},
     createdAt,
     lineItems: {edges}
@@ -7,25 +10,26 @@ export default function formatDataNotification(order, shopId, shopDomain) {
   const {
     node: {
       title,
-      id,
+      id: productId,
       product: {
-        featuredImage: {url}
+        featuredImage: {url: productImageUrl}
       }
     }
   } = edges[0];
-  if (!city || !country || !title || !id || !url || !createdAt) {
+  if (!city || !country || !title || !productId || !orderId || !productImageUrl || !createdAt) {
     console.error('Dữ liệu không hợp lệ trong order:', order);
     return null;
   }
   return {
+    orderId: parseId(orderId),
     firstName: firstName || '',
     city,
     country,
     timestamp: new Date(createdAt),
-    productId: parseInt(/[0-9]{10,}$/g.exec(id)[0]),
+    productId: parseId(productId),
     productName: title,
-    productImage: url,
-    shopId: shopId,
-    shopDomain: shopDomain
+    productImage: productImageUrl,
+    shopId,
+    shopDomain
   };
 }

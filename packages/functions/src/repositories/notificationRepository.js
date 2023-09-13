@@ -1,23 +1,35 @@
 import {Firestore} from '@google-cloud/firestore';
+import {getPagData} from '../helpers/getPagDate';
 
 const firestore = new Firestore();
 const notificationsCollectionRef = firestore.collection('notifications');
 
 export async function addNotification(notification) {
-  const notificationDocs = await notificationsCollectionRef.add(notification);
-  return notificationDocs.id;
+  const {orderId, productId} = notification;
+  const orderDocs = await notificationsCollectionRef
+    .where('orderId', '==', orderId)
+    .where('productId', '==', productId)
+    .limit(1)
+    .get();
+  if (orderDocs.empty) {
+    const notificationDocs = await notificationsCollectionRef.add(notification);
+    return notificationDocs.id;
+  }
+  return null;
 }
 
-export async function getNotifications() {
-  const notificationDocs = await notificationsCollectionRef.get();
-  if (notificationDocs.empty) {
-    return null;
-  }
-  const result = [];
-  notificationDocs.forEach(notification => {
-    const data = notification.data();
-    const {timestamp} = data;
-    result.push({...data, timestamp: timestamp._seconds * 1000});
-  });
-  return result;
+export async function getNotifications(shopId, objQuery) {
+  const {sort, limit} = objQuery;
+  const sortValue = sort.split(':')[1];
+  const objRef = notificationsCollectionRef
+    .where('shopId', '==', shopId)
+    .orderBy('timestamp', sortValue);
+
+  const {data, hasNext, hasPre} = await getPagData(
+    objRef,
+    notificationsCollectionRef,
+    objQuery,
+    parseInt(limit)
+  );
+  return {data, hasNext, hasPre};
 }
