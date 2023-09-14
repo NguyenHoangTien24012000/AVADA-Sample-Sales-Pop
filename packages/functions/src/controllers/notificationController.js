@@ -1,4 +1,5 @@
 import {getCurrentShop} from '../helpers/auth';
+import {getShopByShopifyDomain} from '@avada/shopify-auth';
 import * as notificationRepository from '../repositories/notificationRepository';
 export async function getNotifications(ctx) {
   try {
@@ -12,11 +13,28 @@ export async function getNotifications(ctx) {
       pageInfo: {hasNext, hasPre}
     });
   } catch (error) {
-    ctx.status = 404;
     return (ctx.body = {
       success: false,
       data: {},
       message: error
+    });
+  }
+}
+
+export async function getNotificationsClientApi(ctx) {
+  try {
+    const {shopifyDomain} = ctx.query;
+    const shop = await getShopByShopifyDomain(shopifyDomain);
+    const shopId = shop.id;
+    const data = await notificationRepository.getNotificationsClientApi(shopId);
+    return (ctx.body = {
+      success: true,
+      data
+    });
+  } catch (error) {
+    return (ctx.body = {
+      success: false,
+      data: {}
     });
   }
 }

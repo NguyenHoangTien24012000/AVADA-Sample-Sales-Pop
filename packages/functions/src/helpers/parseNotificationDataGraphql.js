@@ -1,6 +1,6 @@
 import parseId from './parseId';
 
-export default function formatDataNotification(order, shopId, shopDomain) {
+export default function parseNotificationDataGraphql(order, shopId, shopDomain) {
   const {
     id: orderId,
     billingAddress: {firstName, city, country},

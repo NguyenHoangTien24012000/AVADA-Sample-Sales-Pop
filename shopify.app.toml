@@ -2,7 +2,7 @@
 
 name = "avada sample sales pop"
 client_id = "297b6bdc4d02e0eeaeca6ef8b051d1a4"
-application_url = "https://steering-this-sequences-stephen.trycloudflare.com/auth/shopify"
+application_url = "https://distributed-terminology-norway-jeremy.trycloudflare.com/auth/shopify"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://steering-this-sequences-stephen.trycloudflare.com/auth/shopify/callback",
-  "https://steering-this-sequences-stephen.trycloudflare.com/authSa/shopify/callback",
-  "https://steering-this-sequences-stephen.trycloudflare.com/auth/shopify/embed/callback",
+  "https://distributed-terminology-norway-jeremy.trycloudflare.com/auth/shopify/callback",
+  "https://distributed-terminology-norway-jeremy.trycloudflare.com/authSa/shopify/callback",
+  "https://distributed-terminology-norway-jeremy.trycloudflare.com/auth/shopify/embed/callback",
   "https://localhost:3000/auth/shopify/callback",
   "https://localhost:3000/authSa/shopify/callback",
   "https://localhost:3000/auth/shopify/embed/callback"

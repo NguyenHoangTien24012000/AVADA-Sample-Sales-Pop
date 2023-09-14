@@ -6,6 +6,8 @@
  * @returns {Promise<{data: *[], hasNext: boolean, hasPre: boolean}>}
  */
 
+import parseNotificationDataFireStore from './parseNotificationDataFireStore';
+
 export async function getPagData(objRef, collection, query, limit = 1) {
   let hasPre = false;
   let hasNext = false;
@@ -28,10 +30,7 @@ export async function getPagData(objRef, collection, query, limit = 1) {
 
   const objDocs = await objRef.get();
 
-  const data = objDocs.docs.map(doc => ({
-    ...doc.data(),
-    id: doc.id
-  }));
+  const data = objDocs.docs.map(doc => parseNotificationDataFireStore(doc));
 
   if (!hasPre) {
     hasPre = await verifyHasPre(objDocs, objRef);

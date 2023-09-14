@@ -28,7 +28,8 @@
     "@koa/cors" : "4.0.0",
     "qs": "^6.11.0",
     "shopify-api-node": "3.11.0",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "moment": "2.29.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.6.0",

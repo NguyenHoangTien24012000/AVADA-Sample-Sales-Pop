@@ -65,17 +65,12 @@ export default function Notification() {
               onSortChange={changeSortData}
               renderItem={notification => {
                 const {productId, timestamp} = notification;
-                const {date, month, year} = formatDateMonthYear(timestamp._seconds * 1000);
+                const {date, month, year} = formatDateMonthYear(timestamp);
                 return (
                   <ResourceItem id={productId}>
                     <Stack distribution="equalSpacing">
                       <Stack.Item fill>
-                        <NotificationPopup
-                          dataNotification={{
-                            ...notification,
-                            timestamp: notification.timestamp._seconds * 1000
-                          }}
-                        />
+                        <NotificationPopup dataNotification={notification} />
                       </Stack.Item>
                       <Stack.Item>
                         <TextContainer>

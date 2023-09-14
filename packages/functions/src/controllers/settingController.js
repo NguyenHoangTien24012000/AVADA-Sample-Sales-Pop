@@ -9,7 +9,6 @@ export async function getSetting(ctx) {
       data: settings
     });
   } catch (error) {
-    ctx.status = 404;
     return (ctx.body = {
       success: false,
       data: {},
@@ -34,7 +33,6 @@ export async function updateSetting(ctx) {
       data: []
     });
   } catch (error) {
-    ctx.status = 404;
     return (ctx.body = {
       success: false,
       data: {},

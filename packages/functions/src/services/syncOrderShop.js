@@ -1,6 +1,6 @@
 import Shopify from 'shopify-api-node';
 import {addNotification} from '../repositories/NotificationRepository';
-import formatDataNotification from '../helpers/formatDataNotification';
+import parseNotificationDataGraphql from '../helpers/parseNotificationDataGraphql';
 
 const query = `{
   orders(first: 30, sortKey:UPDATED_AT) {
@@ -46,7 +46,7 @@ export default async function syncOrderShop(shopifyDomain, shop) {
     const arrSyncNotifications = dataResult.map(order => {
       const {node} = order;
       const shopId = shop.id;
-      const dataNotification = formatDataNotification(node, shopId, shopifyDomain);
+      const dataNotification = parseNotificationDataGraphql(node, shopId, shopifyDomain);
       if (!dataNotification) {
         return null;
       }
