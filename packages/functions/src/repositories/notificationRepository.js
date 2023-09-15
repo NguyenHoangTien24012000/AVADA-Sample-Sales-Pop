@@ -6,15 +6,14 @@ const firestore = new Firestore();
 const notificationsCollectionRef = firestore.collection('notifications');
 
 export async function addNotification(notification) {
-  const {orderId, productId} = notification;
+  const {orderId} = notification;
   const notificationsDocs = await notificationsCollectionRef
     .where('orderId', '==', orderId)
-    .where('productId', '==', productId)
     .limit(1)
     .get();
   if (notificationsDocs.empty) {
-    const notificationDocs = await notificationsCollectionRef.add(notification);
-    return notificationDocs.id;
+    const notificationNew = await notificationsCollectionRef.add(notification);
+    return notificationNew.id;
   }
   return null;
 }
@@ -35,8 +34,11 @@ export async function getNotifications(shopId, objQuery) {
   return {data, hasNext, hasPre};
 }
 
-export async function getNotificationsClientApi(shopId) {
-  const notificationDocs = await notificationsCollectionRef.where('shopId', '==', shopId).get();
+export async function getNotificationsClientApi(shopId, maxPopsDisplay) {
+  const notificationDocs = await notificationsCollectionRef
+    .where('shopId', '==', shopId)
+    .limit(maxPopsDisplay)
+    .get();
   if (notificationDocs.empty) {
     return [];
   }

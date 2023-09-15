@@ -1,28 +1,28 @@
-import Shopify from 'shopify-api-node';
-import appConfig from '../config/app';
+import createShopifyNodeApi from '../../const/shopifyNodeApi';
+import appConfig from '../../config/app';
 
-export default async function registerWebhook(shopifyDomain, shop) {
+export default async function registerWebhook(shop) {
   const {baseUrl} = appConfig;
   try {
-    const shopify = new Shopify({
-      shopName: shopifyDomain,
-      accessToken: shop.accessToken
-    });
+    const shopify = createShopifyNodeApi(shop);
     const urlRegister = 'https://' + baseUrl + '/webhook/order/new';
     const webHooks = await shopify.webhook.list();
-    const index = webHooks.findIndex(
+    const hasWebhook = webHooks.find(
       webHook => webHook.topic === 'orders/create' && webHook.address === urlRegister
     );
-    if (index !== -1) {
+    if (!!hasWebhook) {
       console.info('Webhook already exists!');
-      return;
+      return null;
     }
 
     await shopify.webhook.create({
       address: urlRegister,
       topic: 'orders/create'
     });
+    console.info('Webhook register success!', urlRegister);
+    return null;
   } catch (error) {
     console.error('ERROR REGISTER WEBHOOK', error);
+    return null;
   }
 }

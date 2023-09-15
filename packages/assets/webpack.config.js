@@ -143,6 +143,7 @@ const plugins = [
         '**/*',
         '!embed.html*',
         '!standalone.html*',
+        '!scripttag/**',
         `!${isEmbeddedApp ? 'standalone' : 'embed'}/**`
       ]
     }),

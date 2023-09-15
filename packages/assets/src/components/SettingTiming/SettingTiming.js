@@ -40,6 +40,7 @@ const GROUP_2 = 'GROUP_2';
 
 export default function SettingTiming({input, setInput}) {
   const handleRangeSliderChange = (value, name, min = 0, max = 100) => {
+    value = parseInt(value);
     if (!/^[0-9]+$/g.test(value)) {
       setInput(prev => ({...prev, [name]: min}));
       return;

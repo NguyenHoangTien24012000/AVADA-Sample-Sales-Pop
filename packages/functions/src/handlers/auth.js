@@ -7,7 +7,7 @@ import path from 'path';
 import createErrorHandler from '@functions/middleware/errorHandler';
 import firebase from 'firebase-admin';
 import appConfig from '@functions/config/app';
-import afterInstallApp from '../services/afterInstallApp';
+import afterInstallApp from '../services/afterInstallApp/afterInstallApp';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp();

@@ -1,17 +1,19 @@
-import {initSettingDefault} from '../repositories/settingRepository';
+import {addSetting} from '../../repositories/settingRepository';
 import {getShopByShopifyDomain} from '@avada/shopify-auth';
 import syncOrderShop from './syncOrderShop';
 import registerWebhook from './registerWebhook';
+import registerScripttag from './registerScripttag';
 
 export default async function afterInstallApp(ctx) {
   try {
     const shopifyDomain = ctx.state.shopify.shop;
     const shop = await getShopByShopifyDomain(shopifyDomain);
-    const {id} = shop;
+
     await Promise.all([
-      initSettingDefault(shopifyDomain, id),
-      syncOrderShop(shopifyDomain, shop),
-      registerWebhook(shopifyDomain, shop)
+      addSetting(shop),
+      syncOrderShop(shop),
+      registerWebhook(shop),
+      registerScripttag(shop)
     ]);
     return (ctx.body = {
       success: true,

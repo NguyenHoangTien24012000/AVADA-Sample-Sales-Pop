@@ -1,6 +1,7 @@
 import parseId from './parseId';
 
-export default function parseNotificationDataGraphql(order, shopId, shopDomain) {
+export default function parseNotificationDataGraphql(order, shop) {
+  const {shopifyDomain: shopDomain, shopId} = shop;
   const {
     id: orderId,
     billingAddress: {firstName, city, country},

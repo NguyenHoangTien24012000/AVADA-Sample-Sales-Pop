@@ -4,7 +4,7 @@ import settingDefaultApp from '../const/defaultDataSetting';
 const firestore = new Firestore();
 const settingCollectionRef = firestore.collection('settings');
 
-export async function getSettings(shopId) {
+export async function getSetting(shopId) {
   const settingDocs = await settingCollectionRef
     .where('shopId', '==', shopId)
     .limit(1)
@@ -19,7 +19,7 @@ export async function getSettings(shopId) {
   };
 }
 
-export async function updateSettings(settings) {
+export async function updateSetting(settings) {
   const {id} = settings;
   const settingDocs = settingCollectionRef.doc(id);
   if (!settingDocs) {
@@ -28,7 +28,8 @@ export async function updateSettings(settings) {
   const resUpdate = await settingDocs.update(settings);
   return resUpdate;
 }
-export async function initSettingDefault(shopifyDomain, shopId) {
+export async function addSetting(shop) {
+  const {shopifyDomain, shopId} = shop;
   const settingDocs = await settingCollectionRef
     .where('shopId', '==', shopId)
     .limit(1)

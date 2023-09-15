@@ -37,7 +37,6 @@ export default function Notification() {
     defaultLimit: 5,
     defaultSort: DATE_MODIFIED_DESC
   });
-  console.log(dataNotifications, pageInfo);
   const changeSortData = async sort => {
     onQueryChange('sort', sort, true);
   };

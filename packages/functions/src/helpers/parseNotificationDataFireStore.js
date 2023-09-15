@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 export default function parseNotificationDataFireStore(doc, clientApi = false) {
   ({
     ...doc.data(),
@@ -6,9 +7,11 @@ export default function parseNotificationDataFireStore(doc, clientApi = false) {
   });
   const data = doc.data();
   const id = doc.id;
-  let timestamp = data.timestamp._seconds * 1000;
+  let timestamp = data.timestamp.toDate();
   if (clientApi) {
-    timestamp = moment(data.timestamp._seconds * 1000).fromNow();
+    timestamp = moment(data.timestamp.toDate()).fromNow();
+    const {shopId, ...dataClientApi} = data;
+    return {...dataClientApi, timestamp};
   }
   return {...data, id, timestamp};
 }
