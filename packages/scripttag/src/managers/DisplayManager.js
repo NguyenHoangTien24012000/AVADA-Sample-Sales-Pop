@@ -7,6 +7,7 @@ export default class DisplayManager {
   constructor() {
     this.notifications = [];
     this.settings = {};
+    this.hasFadeOut = false;
   }
   async initialize({notifications, setting}) {
     this.notifications = notifications;
@@ -17,6 +18,7 @@ export default class DisplayManager {
   fadeOut() {
     const container = document.querySelector('#Avada-SalePop');
     container.innerHTML = '';
+    this.hasFadeOut = true;
   }
 
   display(notification) {
@@ -47,7 +49,6 @@ export default class DisplayManager {
     };
     await delay(firstDelay);
     for (let index = 0; index < this.notifications.length; index++) {
-      console.log(index);
       this.display(this.notifications[index]);
       await delay(displayDuration);
       this.hidden();
