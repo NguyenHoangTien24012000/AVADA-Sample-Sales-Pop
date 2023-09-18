@@ -37,6 +37,7 @@ export async function getNotifications(shopId, objQuery) {
 export async function getNotificationsClientApi(shopId, maxPopsDisplay) {
   const notificationDocs = await notificationsCollectionRef
     .where('shopId', '==', shopId)
+    .orderBy('timestamp', 'desc')
     .limit(maxPopsDisplay)
     .get();
   if (notificationDocs.empty) {

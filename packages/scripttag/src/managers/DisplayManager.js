@@ -2,6 +2,7 @@ import {insertAfter} from '../helpers/insertHelpers';
 import {render} from 'preact';
 import React from 'preact/compat';
 import lazy from 'preact-lazy';
+import {checkCookie, setCookie, getCookie} from '../helpers/setCookieOnFadeOut';
 const NotificationPopup = lazy(() => import('../components/NotificationPopup/NotificationPopup'));
 
 export default class DisplayManager {
@@ -12,12 +13,17 @@ export default class DisplayManager {
   async initialize({notifications, setting}) {
     this.notifications = notifications;
     this.settings = setting;
+    const hasCookie = checkCookie('fadeout');
     this.insertContainer();
+    if (!hasCookie) {
+      setCookie('fadeout', 0, 1);
+    }
   }
 
   fadeOut() {
     const container = document.querySelector('#Avada-SalePop');
     container.innerHTML = '';
+    setCookie('fadeout', 1, 1);
   }
 
   display(notification) {
@@ -39,21 +45,25 @@ export default class DisplayManager {
   }
 
   checkUrlPage() {
-    const {includedUrls, excludedUrls, allowShow} = setting;
+    const {includedUrls, excludedUrls, allowShow} = this.settings;
     const arrIncludedUrls = includedUrls.split('\n').map(item => item.trim());
     const arrExcludedUrls = excludedUrls.split('\n').map(item => item.trim());
-    const URL_PAGE = window.location.href;
+    let URL_PAGE = window.location.href;
+    if (URL_PAGE.endsWith('/')) {
+      URL_PAGE = /(.+(?=\/))/.exec(URL_PAGE)[0];
+    }
     if (allowShow === 'specific' && arrExcludedUrls.includes(URL_PAGE)) {
       return false;
     }
-    if (allowShow === 'all' && !new Set(arrIncludedUrls).includes(URL_PAGE)) {
+    if (allowShow === 'all' && !arrIncludedUrls.includes(URL_PAGE)) {
       return false;
     }
     return true;
   }
 
   async runningPopup() {
-    if (!this.checkUrlPage()) return;
+    const fadeOut = getCookie('fadeout');
+    if (!this.checkUrlPage() || fadeOut === '1') return;
     let {firstDelay, displayDuration, popsInterval} = this.settings;
     firstDelay = parseInt(firstDelay) * 1000;
     displayDuration = parseInt(displayDuration) * 1000;
