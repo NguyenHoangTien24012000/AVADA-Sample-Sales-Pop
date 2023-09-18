@@ -2,7 +2,7 @@
 
 name = "avada sample sales pop"
 client_id = "297b6bdc4d02e0eeaeca6ef8b051d1a4"
-application_url = "https://either-subsidiary-mel-crm.trycloudflare.com/auth/shopify"
+application_url = "https://perception-louisiana-partially-police.trycloudflare.com/auth/shopify"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://either-subsidiary-mel-crm.trycloudflare.com/auth/shopify/callback",
-  "https://either-subsidiary-mel-crm.trycloudflare.com/authSa/shopify/callback",
-  "https://either-subsidiary-mel-crm.trycloudflare.com/auth/shopify/embed/callback",
+  "https://perception-louisiana-partially-police.trycloudflare.com/auth/shopify/callback",
+  "https://perception-louisiana-partially-police.trycloudflare.com/authSa/shopify/callback",
+  "https://perception-louisiana-partially-police.trycloudflare.com/auth/shopify/embed/callback",
   "https://localhost:3000/auth/shopify/callback",
   "https://localhost:3000/authSa/shopify/callback",
   "https://localhost:3000/auth/shopify/embed/callback"

@@ -7,7 +7,6 @@ export async function getNotifications(ctx) {
   try {
     const shopId = getCurrentShop(ctx);
     const objQuery = ctx.query;
-
     const {data, hasNext, hasPre} = await notificationRepository.getNotifications(shopId, objQuery);
     return (ctx.body = {
       success: true,

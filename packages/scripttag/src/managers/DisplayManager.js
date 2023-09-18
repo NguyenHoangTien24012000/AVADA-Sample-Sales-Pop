@@ -1,13 +1,13 @@
 import {insertAfter} from '../helpers/insertHelpers';
 import {render} from 'preact';
 import React from 'preact/compat';
-import NotificationPopup from '../components/NotificationPopup/NotificationPopup';
+import lazy from 'preact-lazy';
+const NotificationPopup = lazy(() => import('../components/NotificationPopup/NotificationPopup'));
 
 export default class DisplayManager {
   constructor() {
     this.notifications = [];
     this.settings = {};
-    this.hasFadeOut = false;
   }
   async initialize({notifications, setting}) {
     this.notifications = notifications;
@@ -18,7 +18,6 @@ export default class DisplayManager {
   fadeOut() {
     const container = document.querySelector('#Avada-SalePop');
     container.innerHTML = '';
-    this.hasFadeOut = true;
   }
 
   display(notification) {
@@ -39,7 +38,22 @@ export default class DisplayManager {
     container.style.display = 'none';
   }
 
+  checkUrlPage() {
+    const {includedUrls, excludedUrls, allowShow} = setting;
+    const arrIncludedUrls = includedUrls.split('\n').map(item => item.trim());
+    const arrExcludedUrls = excludedUrls.split('\n').map(item => item.trim());
+    const URL_PAGE = window.location.href;
+    if (allowShow === 'specific' && arrExcludedUrls.includes(URL_PAGE)) {
+      return false;
+    }
+    if (allowShow === 'all' && !new Set(arrIncludedUrls).includes(URL_PAGE)) {
+      return false;
+    }
+    return true;
+  }
+
   async runningPopup() {
+    if (!this.checkUrlPage()) return;
     let {firstDelay, displayDuration, popsInterval} = this.settings;
     firstDelay = parseInt(firstDelay) * 1000;
     displayDuration = parseInt(displayDuration) * 1000;

@@ -6,8 +6,8 @@ export default async function registerScripttag(shop) {
     const shopify = createShopifyNodeApi(shop);
 
     const listScripttag = await shopify.scriptTag.list();
-    const index = listScripttag.findIndex(element => element.src === URL_SCRIPTTAG_REGISTER);
-    if (index !== -1) {
+    const hasScripttag = listScripttag.find(element => element.src === URL_SCRIPTTAG_REGISTER);
+    if (!!hasScripttag) {
       return;
     }
     await shopify.scriptTag.create({
