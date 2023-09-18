@@ -29,9 +29,9 @@ export async function updateSetting(settings) {
   return resUpdate;
 }
 export async function addSetting(shop) {
-  const {shopifyDomain, shopId} = shop;
+  const {shopifyDomain, id} = shop;
   const settingDocs = await settingCollectionRef
-    .where('shopId', '==', shopId)
+    .where('shopId', '==', id)
     .limit(1)
     .get();
   if (settingDocs.empty) {

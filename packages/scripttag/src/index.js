@@ -6,5 +6,4 @@ import ApiManager from './managers/ApiManager';
   const displayManager = new DisplayManager();
   const {notifications, setting} = await apiManager.getNotifications();
   displayManager.initialize({notifications, setting});
-  displayManager.runningPopup();
 })();

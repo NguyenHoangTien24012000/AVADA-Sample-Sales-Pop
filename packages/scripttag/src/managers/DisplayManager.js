@@ -2,7 +2,7 @@ import {insertAfter} from '../helpers/insertHelpers';
 import {render} from 'preact';
 import React from 'preact/compat';
 import lazy from 'preact-lazy';
-import {checkCookie, setCookie, getCookie} from '../helpers/setCookieOnFadeOut';
+import {checkCookie, setCookie, getCookie} from '../helpers/setCookie';
 const NotificationPopup = lazy(() => import('../components/NotificationPopup/NotificationPopup'));
 
 export default class DisplayManager {
@@ -18,6 +18,9 @@ export default class DisplayManager {
     if (!hasCookie) {
       setCookie('fadeout', 0, 1);
     }
+    const fadeOut = getCookie('fadeout');
+    if (!this.checkUrlPage() || fadeOut === '1') return;
+    this.runningPopup();
   }
 
   fadeOut() {
@@ -52,33 +55,31 @@ export default class DisplayManager {
     if (URL_PAGE.endsWith('/')) {
       URL_PAGE = /(.+(?=\/))/.exec(URL_PAGE)[0];
     }
-    if (allowShow === 'specific' && arrExcludedUrls.includes(URL_PAGE)) {
+    if (allowShow === 'specific' && !arrIncludedUrls.includes(URL_PAGE)) {
       return false;
     }
-    if (allowShow === 'all' && !arrIncludedUrls.includes(URL_PAGE)) {
+    if (allowShow === 'all' && arrExcludedUrls.includes(URL_PAGE)) {
       return false;
     }
     return true;
   }
+  delay(delayInms) {
+    return new Promise(resolve => setTimeout(resolve, delayInms));
+  }
 
   async runningPopup() {
-    const fadeOut = getCookie('fadeout');
-    if (!this.checkUrlPage() || fadeOut === '1') return;
     let {firstDelay, displayDuration, popsInterval} = this.settings;
     firstDelay = parseInt(firstDelay) * 1000;
     displayDuration = parseInt(displayDuration) * 1000;
     popsInterval = parseInt(popsInterval) * 1000;
-    const delay = delayInms => {
-      return new Promise(resolve => setTimeout(resolve, delayInms));
-    };
-    await delay(firstDelay);
+
+    await this.delay(firstDelay);
     for (let index = 0; index < this.notifications.length; index++) {
       this.display(this.notifications[index]);
-      await delay(displayDuration);
+      await this.delay(displayDuration);
       this.hidden();
-      await delay(popsInterval);
+      await this.delay(popsInterval);
     }
-    this.fadeOut();
   }
 
   insertContainer() {

@@ -22,7 +22,7 @@ export function getCookie(key) {
 
 export function checkCookie(key) {
   const user = getCookie(key);
-  if (user != '') {
+  if (user !== '') {
     return true;
   }
   return false;
