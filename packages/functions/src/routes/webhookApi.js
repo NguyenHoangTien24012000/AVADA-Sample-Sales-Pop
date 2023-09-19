@@ -1,10 +1,10 @@
 import Router from 'koa-router';
-import * as webhookController from '../controllers/webhook/webhookController';
+import * as notificationController from '../controllers/notificationController';
 
 const router = new Router({
   prefix: '/webhook'
 });
 
-router.post('/order/new', webhookController.listenNewOrder);
+router.post('/order/new', notificationController.addNotification);
 
 export default router;

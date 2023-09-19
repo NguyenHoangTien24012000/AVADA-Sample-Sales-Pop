@@ -2,6 +2,7 @@ import {getCurrentShop} from '../helpers/auth';
 import {getShopByShopifyDomain} from '@avada/shopify-auth';
 import * as notificationRepository from '../repositories/notificationRepository';
 import * as settingRepository from '../repositories/settingRepository';
+import {getOrderNew} from '../services/shopifyApi/getOrderNew';
 
 export async function getNotifications(ctx) {
   try {
@@ -44,6 +45,26 @@ export async function getNotificationsClientApi(ctx) {
     return (ctx.body = {
       success: false,
       data: {}
+    });
+  }
+}
+
+export async function addNotification(ctx) {
+  try {
+    const {admin_graphql_api_id} = ctx.req.body;
+    const shopifyDomain = ctx.get('X-Shopify-Shop-Domain');
+    const dataNotification = await getOrderNew(shopifyDomain, admin_graphql_api_id);
+    if (!dataNotification) {
+      return null;
+    }
+    await notificationRepository.addNotification(dataNotification);
+    return (ctx.body = {
+      success: true
+    });
+  } catch (error) {
+    console.error(error);
+    return (ctx.body = {
+      success: false
     });
   }
 }

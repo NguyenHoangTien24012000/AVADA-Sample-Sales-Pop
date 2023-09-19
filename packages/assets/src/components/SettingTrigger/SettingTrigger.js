@@ -1,5 +1,5 @@
 import {Card, Select, Stack, TextField} from '@shopify/polaris';
-import React, {useCallback} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function SettingTrigger({includedUrls, excludedUrls, setInput, input}) {

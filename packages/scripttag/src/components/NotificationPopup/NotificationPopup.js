@@ -1,37 +1,21 @@
 import React from 'react';
 import './NoticationPopup.scss';
-
-const defaultSettings = {
-  position: 'bottom-left',
-  hideTimeAgo: false,
-  truncateProductName: false,
-  displayDuration: 3,
-  firstDelay: 5,
-  popsInterval: 2,
-  maxPopsDisplay: 10,
-  includedUrls: '',
-  excludedUrls: '',
-  allowShow: 'all'
-};
-
-const defaultNotificationPopup = {
-  firstName: 'John Doe',
-  city: 'New York',
-  country: 'United States',
-  productName: 'Puffer Jacket ',
-  timestamp: '6 days ago',
-  productImage: 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png'
-};
+import PropTypes from 'prop-types';
 
 const NotificationPopup = ({
-  notification = defaultNotificationPopup,
-  settings = defaultSettings,
-  fadeOut
+  firstName = 'John Doe',
+  city = 'New York',
+  country = 'United States',
+  productName = 'Puffer Jacket ',
+  timestamp = '6 days ago',
+  productImage = 'https://boostsales.apps.avada.io/42b7c27ec4d0b67163b3d2adc1f1221e.png',
+  position = 'bottom-left',
+  hideTimeAgo = false,
+  truncateProductName = false,
+  onClosePopup = () => {}
 }) => {
-  const {firstName, city, country, productImage, productName, timestamp} = notification;
-  const {hideTimeAgo, truncateProductName} = settings;
   let style = {bottom: '15px', left: '15px'};
-  switch (settings.position) {
+  switch (position) {
     case 'bottom-right': {
       style = {bottom: '15px', right: '15px'};
       break;
@@ -76,7 +60,7 @@ const NotificationPopup = ({
                   </span>
                 </div>
               </div>
-              <div className="Avada-SP__Cancel" onClick={fadeOut}>
+              <div className="Avada-SP__Cancel" onClick={onClosePopup}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
@@ -96,6 +80,17 @@ const NotificationPopup = ({
   );
 };
 
-NotificationPopup.propTypes = {};
+NotificationPopup.propTypes = {
+  firstName: PropTypes.string,
+  city: PropTypes.string,
+  country: PropTypes.string,
+  productName: PropTypes.string,
+  timestamp: PropTypes.string,
+  productImage: PropTypes.string,
+  position: PropTypes.string,
+  hideTimeAgo: PropTypes.bool,
+  truncateProductName: PropTypes.bool,
+  onClosePopup: PropTypes.func
+};
 
 export default NotificationPopup;

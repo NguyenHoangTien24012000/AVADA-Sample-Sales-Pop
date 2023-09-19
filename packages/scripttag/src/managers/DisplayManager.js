@@ -8,24 +8,30 @@ const NotificationPopup = lazy(() => import('../components/NotificationPopup/Not
 export default class DisplayManager {
   constructor() {
     this.notifications = [];
-    this.settings = {};
+    this.setting = {};
   }
   async initialize({notifications, setting}) {
     this.notifications = notifications;
-    this.settings = setting;
-    const hasCookie = checkCookie('fadeout');
+    this.setting = setting;
     this.insertContainer();
+    const hasCookie = checkCookie('fadeout');
     if (!hasCookie) {
       setCookie('fadeout', 0, 1);
     }
-    const fadeOut = getCookie('fadeout');
-    if (!this.checkUrlPage() || fadeOut === '1') return;
-    this.runningPopup();
+    if (!this.shouldStartDisplay()) return;
+    this.initiateDisplay();
   }
 
   fadeOut() {
     const container = document.querySelector('#Avada-SalePop');
-    container.innerHTML = '';
+    container.style.display = 'none';
+  }
+
+  onClosePopup() {
+    const container = document.querySelector('#Avada-SalePop');
+    if (container) {
+      container.remove();
+    }
     setCookie('fadeout', 1, 1);
   }
 
@@ -34,24 +40,25 @@ export default class DisplayManager {
     render(
       <NotificationPopup
         notification={notification}
-        settings={this.settings}
-        fadeOut={this.fadeOut}
+        setting={this.setting}
+        onClosePopup={this.onClosePopup}
       />,
       container
     );
     container.style.display = 'block';
   }
 
-  hidden() {
-    const container = document.querySelector('#Avada-SalePop');
-    container.style.display = 'none';
+  shouldStartDisplay() {
+    const fadeOut = getCookie('fadeout');
+    if (!this.checkUrlPage() || fadeOut === '1') return false;
+    return true;
   }
 
   checkUrlPage() {
-    const {includedUrls, excludedUrls, allowShow} = this.settings;
-    const arrIncludedUrls = includedUrls.split('\n').map(item => item.trim());
-    const arrExcludedUrls = excludedUrls.split('\n').map(item => item.trim());
-    let URL_PAGE = window.location.href;
+    const {includedUrls, excludedUrls, allowShow} = this.setting;
+    const arrIncludedUrls = includedUrls.match(/https?:\/\/([\S]+)/g);
+    const arrExcludedUrls = excludedUrls.match(/https?:\/\/([\S]+)/g);
+    let URL_PAGE = window.location.origin + window.location.pathname;
     if (URL_PAGE.endsWith('/')) {
       URL_PAGE = /(.+(?=\/))/.exec(URL_PAGE)[0];
     }
@@ -67,8 +74,8 @@ export default class DisplayManager {
     return new Promise(resolve => setTimeout(resolve, delayInms));
   }
 
-  async runningPopup() {
-    let {firstDelay, displayDuration, popsInterval} = this.settings;
+  async initiateDisplay() {
+    let {firstDelay, displayDuration, popsInterval} = this.setting;
     firstDelay = parseInt(firstDelay) * 1000;
     displayDuration = parseInt(displayDuration) * 1000;
     popsInterval = parseInt(popsInterval) * 1000;
@@ -77,7 +84,7 @@ export default class DisplayManager {
     for (let index = 0; index < this.notifications.length; index++) {
       this.display(this.notifications[index]);
       await this.delay(displayDuration);
-      this.hidden();
+      this.fadeOut();
       await this.delay(popsInterval);
     }
   }
