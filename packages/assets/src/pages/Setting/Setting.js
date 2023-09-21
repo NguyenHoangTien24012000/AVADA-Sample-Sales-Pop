@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {Card, Layout, Page, Tabs, Loading} from '@shopify/polaris';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
 import '../../styles/pages/setting.scss';
