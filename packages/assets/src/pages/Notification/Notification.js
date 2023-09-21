@@ -15,7 +15,7 @@ import NotificationPopup from '../../components/NotificationPopup/NotificationPo
 import '../../styles/pages/notification.scss';
 import {formatDateMonthYear} from '../../helpers/utils/formatFullTime';
 import usePaginate from '../../hooks/api/usePaginate';
-import {defaultDataNotifications} from '../../const/settings/defaultDataNotification';
+import {defaultDataNotifications} from '../../const/settings/defaultNotificationData';
 
 const DATE_MODIFIED_DESC = 'createdAt:desc';
 const DATE_MODIFIED_ASC = 'createdAt:asc';
@@ -26,7 +26,7 @@ export default function Notification() {
     prevPage,
     nextPage,
     onQueryChange,
-    data: dataNotifications,
+    data: notifications,
     loading,
     sort,
     fetched,
@@ -37,6 +37,7 @@ export default function Notification() {
     defaultLimit: 5,
     defaultSort: DATE_MODIFIED_DESC
   });
+
   const changeSortData = async sort => {
     onQueryChange('sort', sort, true);
   };
@@ -52,7 +53,7 @@ export default function Notification() {
               loading={loading}
               idForItem={item => item.productId}
               resourceName={{singular: 'notification', plural: 'notifications'}}
-              items={dataNotifications}
+              items={notifications}
               selectedItems={selectedItems}
               onSelectionChange={setSelectedItems}
               selectable
@@ -69,7 +70,7 @@ export default function Notification() {
                   <ResourceItem id={productId}>
                     <Stack distribution="equalSpacing">
                       <Stack.Item fill>
-                        <NotificationPopup dataNotification={notification} />
+                        <NotificationPopup notification={notification} />
                       </Stack.Item>
                       <Stack.Item>
                         <TextContainer>

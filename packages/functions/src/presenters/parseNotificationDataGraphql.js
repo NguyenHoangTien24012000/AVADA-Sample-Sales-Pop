@@ -1,4 +1,4 @@
-import parseId from './parseId';
+import parseId from '../helpers/parseId';
 
 export default function parseNotificationDataGraphql(order, shop) {
   const {shopifyDomain: shopDomain, id: shopId} = shop;

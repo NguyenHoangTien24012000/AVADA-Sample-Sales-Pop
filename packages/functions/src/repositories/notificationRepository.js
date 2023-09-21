@@ -1,18 +1,18 @@
 import {Firestore} from '@google-cloud/firestore';
 import {getPagData} from '../helpers/getPagDate';
-import parseNotificationDataFireStore from '../helpers/parseNotificationDataFireStore';
+import parseNotificationDataFireStore from '../presenters/parseNotificationDataFireStore';
 
 const firestore = new Firestore();
-const notificationsCollectionRef = firestore.collection('notifications');
+const collection = firestore.collection('notifications');
 
 export async function addNotification(notification) {
   const {orderId} = notification;
-  const notificationsDocs = await notificationsCollectionRef
+  const notifications = await collection
     .where('orderId', '==', orderId)
     .limit(1)
     .get();
-  if (notificationsDocs.empty) {
-    const notificationNew = await notificationsCollectionRef.add(notification);
+  if (notifications.empty) {
+    const notificationNew = await collection.add(notification);
     return notificationNew.id;
   }
   return null;
@@ -21,13 +21,13 @@ export async function addNotification(notification) {
 export async function getNotifications(shopId, objQuery) {
   const {sort, limit} = objQuery;
   const sortValue = sort.split(':')[1];
-  const notificationsDocsRef = notificationsCollectionRef
+  const notificationsDocs = collection
     .where('shopId', '==', shopId)
     .orderBy('timestamp', sortValue);
 
   const {data, hasNext, hasPre} = await getPagData(
-    notificationsDocsRef,
-    notificationsCollectionRef,
+    notificationsDocs,
+    collection,
     objQuery,
     parseInt(limit)
   );
@@ -35,14 +35,14 @@ export async function getNotifications(shopId, objQuery) {
 }
 
 export async function getNotificationsClientApi(shopId, maxPopsDisplay) {
-  const notificationDocs = await notificationsCollectionRef
+  const notifications = await collection
     .where('shopId', '==', shopId)
     .orderBy('timestamp', 'desc')
     .limit(maxPopsDisplay)
     .get();
-  if (notificationDocs.empty) {
+  if (notifications.empty) {
     return [];
   }
-  const data = notificationDocs.docs.map(doc => parseNotificationDataFireStore(doc, true));
+  const data = notifications.docs.map(doc => parseNotificationDataFireStore(doc, true));
   return data;
 }

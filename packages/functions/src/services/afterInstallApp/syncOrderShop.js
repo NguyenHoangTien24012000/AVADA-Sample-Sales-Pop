@@ -1,5 +1,5 @@
 import {addNotification} from '../../repositories/notificationRepository';
-import parseNotificationDataGraphql from '../../helpers/parseNotificationDataGraphql';
+import parseNotificationDataGraphql from '../../presenters/parseNotificationDataGraphql';
 import getOrders from '../shopifyApi/getOrders';
 
 export default async function syncOrderShop(shop) {

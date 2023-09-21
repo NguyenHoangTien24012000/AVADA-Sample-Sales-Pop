@@ -1,13 +1,7 @@
 import React from 'react';
-import {Frame, Navigation} from '@shopify/polaris';
+import {Navigation} from '@shopify/polaris';
 import {useHistory, useLocation} from 'react-router-dom';
-import {
-  ArrowLeftMinor,
-  HomeMajor,
-  SettingsMajor,
-  ShareMinor,
-  NotificationMajor
-} from '@shopify/polaris-icons';
+import {ArrowLeftMinor, HomeMajor, SettingsMajor, NotificationMajor} from '@shopify/polaris-icons';
 import '@assets/styles/layout/navigation.scss';
 import {useStore} from '@assets/reducers/storeReducer';
 import {isEmbeddedApp, prependRoute} from '@assets/config/app';

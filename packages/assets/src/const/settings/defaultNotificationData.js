@@ -1,4 +1,4 @@
-export const defaultDataNotifications = [
+export const defaultNotificationsData = [
   {
     id: 1,
     firstName: 'John Doe',

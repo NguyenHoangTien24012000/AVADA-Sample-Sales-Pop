@@ -13,7 +13,7 @@ import defaultSettings from '../../const/settings/defaultSetting';
 export default function Settings() {
   const [selected, setSelected] = useState(0);
 
-  const handleTabChange = useCallback(selectedTabIndex => setSelected(selectedTabIndex), []);
+  const handleTabChange = selectedTabIndex => setSelected(selectedTabIndex);
 
   const {loading, data: input, setData: setInput} = useFetchApi({
     url: '/settings',

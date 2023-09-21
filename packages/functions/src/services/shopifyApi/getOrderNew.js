@@ -1,5 +1,5 @@
 import {getShopByShopifyDomain} from '@avada/shopify-auth';
-import parseNotificationDataGraphql from '../../helpers/parseNotificationDataGraphql';
+import parseNotificationDataGraphql from '../../presenters/parseNotificationDataGraphql';
 import createShopifyNodeApi from '../../const/shopifyNodeApi';
 
 export async function getOrderNew(shopifyDomain, paramQueryOrder) {

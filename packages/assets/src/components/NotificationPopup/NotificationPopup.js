@@ -4,7 +4,7 @@ import {defaultNotificationPopup, defaultSettings} from '../../const/settings';
 import {untilPresent} from '../../helpers/utils/formatFullTime';
 import PropTypes from 'prop-types';
 const NotificationPopup = ({
-  dataNotification = defaultNotificationPopup,
+  notification = defaultNotificationPopup,
   truncateProductName = defaultSettings.truncateProductName,
   hideTimeAgo = defaultSettings.hideTimeAgo
 }) => {
@@ -16,18 +16,18 @@ const NotificationPopup = ({
             <div
               className="Avava-SP__Image"
               style={{
-                backgroundImage: `url(${dataNotification.productImage})`
+                backgroundImage: `url(${notification.productImage})`
               }}
             ></div>
             <div className="Avada-SP__Content">
               <div className={`Avada-SP__Title ${truncateProductName && 'truncate__title'}`}>
-                {dataNotification.firstName} in {dataNotification.city}, {dataNotification.country}
+                {notification.firstName} in {notification.city}, {notification.country}
               </div>
               <div className={`Avada-SP__Subtitle ${truncateProductName && 'truncate__subtitle'}`}>
-                purchased {dataNotification.productName}
+                purchased {notification.productName}
               </div>
               <div className={'Avada-SP__Footer '}>
-                <div>{hideTimeAgo || untilPresent(dataNotification.timestamp)}</div>
+                <div>{hideTimeAgo || untilPresent(notification.timestamp)}</div>
                 <span className="uni-blue">
                   <i className="fa fa-check" aria-hidden="true">
                     &#x2713;
@@ -56,7 +56,7 @@ const NotificationPopup = ({
 };
 
 NotificationPopup.propTypes = {
-  dataNotification: PropTypes.object,
+  notification: PropTypes.object,
   truncateProductName: PropTypes.bool,
   hideTimeAgo: PropTypes.bool
 };

@@ -40,7 +40,9 @@ export default class DisplayManager {
     render(
       <NotificationPopup
         notification={notification}
-        setting={this.setting}
+        position={this.setting.position}
+        hideTimeAgo={this.setting.hideTimeAgo}
+        truncateProductName={this.setting.truncateProductName}
         onClosePopup={this.onClosePopup}
       />,
       container
@@ -70,6 +72,7 @@ export default class DisplayManager {
     }
     return true;
   }
+
   delay(delayInms) {
     return new Promise(resolve => setTimeout(resolve, delayInms));
   }
@@ -81,8 +84,8 @@ export default class DisplayManager {
     popsInterval = parseInt(popsInterval) * 1000;
 
     await this.delay(firstDelay);
-    for (let index = 0; index < this.notifications.length; index++) {
-      this.display(this.notifications[index]);
+    for (const notification of this.notifications) {
+      this.display(notification);
       await this.delay(displayDuration);
       this.fadeOut();
       await this.delay(popsInterval);

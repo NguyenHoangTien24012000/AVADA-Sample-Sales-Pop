@@ -14,18 +14,18 @@ const NotificationPopup = ({
   truncateProductName = false,
   onClosePopup = () => {}
 }) => {
-  let style = {bottom: '15px', left: '15px'};
+  let style = {bottom: '35px', left: '85px'};
   switch (position) {
     case 'bottom-right': {
-      style = {bottom: '15px', right: '15px'};
+      style = {bottom: '35px', right: '85px'};
       break;
     }
     case 'top-left': {
-      style = {top: '15px', left: '15px'};
+      style = {top: '35px', left: '85px'};
       break;
     }
     case 'top-right': {
-      style = {top: '15px', right: '15px'};
+      style = {top: '35px', right: '85px'};
       break;
     }
     default:

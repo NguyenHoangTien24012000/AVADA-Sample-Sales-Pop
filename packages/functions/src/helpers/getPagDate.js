@@ -6,7 +6,7 @@
  * @returns {Promise<{data: *[], hasNext: boolean, hasPre: boolean}>}
  */
 
-import parseNotificationDataFireStore from './parseNotificationDataFireStore';
+import parseNotificationDataFireStore from '../presenters/parseNotificationDataFireStore';
 
 export async function getPagData(objRef, collection, query, limit = 1) {
   let hasPre = false;

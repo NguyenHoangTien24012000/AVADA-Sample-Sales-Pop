@@ -57,14 +57,14 @@ export default function SettingTiming({input, setInput}) {
     setInput(prev => ({...prev, [name]: value}));
   };
 
-  function getRanges(group) {
+  const getRanges = group => {
     if (group === GROUP_1) {
       return arrRange.slice(0, 2);
     }
     if (group === GROUP_2) {
       return arrRange.slice(2, 4);
     }
-  }
+  };
 
   const renderRange = group => {
     return getRanges(group).map((item, index) => {
