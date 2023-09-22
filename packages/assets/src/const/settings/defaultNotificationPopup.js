@@ -1,5 +1,5 @@
 const defaultNotificationPopup = {
-  firstName: 'John Doe',
+  firstName: 'Someone',
   city: 'New York',
   country: 'United States',
   productName: 'Puffer Jacket ',

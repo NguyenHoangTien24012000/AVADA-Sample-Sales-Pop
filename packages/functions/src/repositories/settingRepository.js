@@ -35,7 +35,7 @@ export async function addSetting(shop) {
     .limit(1)
     .get();
   if (settingDocs.empty) {
-    const defaultSetting = {...settingDefaultApp, shopifyDomain, shopId};
+    const defaultSetting = {...settingDefaultApp, shopifyDomain, shopId: id};
     const settingDocs = await collection.add(defaultSetting);
     return settingDocs.id;
   }

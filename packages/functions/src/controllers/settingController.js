@@ -10,9 +10,10 @@ export async function getSetting(ctx) {
       data: setting
     });
   } catch (error) {
+    console.error(error);
     return (ctx.body = {
       success: false,
-      data: {},
+      data: [],
       error: error.message
     });
   }
@@ -21,12 +22,13 @@ export async function getSetting(ctx) {
 export async function updateSetting(ctx) {
   try {
     const {data} = ctx.req.body;
+    console.info(data);
     const resUpdate = await settingRepository.updateSetting(data);
     if (resUpdate === null) {
       ctx.status = 404;
       return (ctx.body = {
         success: false,
-        data: {}
+        data: []
       });
     }
     return (ctx.body = {
@@ -34,9 +36,10 @@ export async function updateSetting(ctx) {
       data: []
     });
   } catch (error) {
+    console.error(error);
     return (ctx.body = {
       success: false,
-      data: {},
+      data: [],
       error: error.message
     });
   }

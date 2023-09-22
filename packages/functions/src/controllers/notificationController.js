@@ -15,9 +15,10 @@ export async function getNotifications(ctx) {
       pageInfo: {hasNext, hasPre}
     });
   } catch (error) {
+    console.error(error);
     return (ctx.body = {
       success: false,
-      data: {},
+      data: [],
       message: error
     });
   }
@@ -42,9 +43,10 @@ export async function getNotificationsClientApi(ctx) {
       }
     });
   } catch (error) {
+    console.error(error);
     return (ctx.body = {
       success: false,
-      data: {}
+      data: []
     });
   }
 }

@@ -4,7 +4,12 @@ import {defaultNotificationPopup, defaultSettings} from '../../const/settings';
 import {untilPresent} from '../../helpers/utils/formatFullTime';
 import PropTypes from 'prop-types';
 const NotificationPopup = ({
-  notification = defaultNotificationPopup,
+  productImage = defaultNotificationPopup.productImage,
+  firstName = defaultNotificationPopup.firstName,
+  city = defaultNotificationPopup.city,
+  country = defaultNotificationPopup.country,
+  productName = defaultNotificationPopup.productName,
+  timestamp = defaultNotificationPopup.timestamp,
   truncateProductName = defaultSettings.truncateProductName,
   hideTimeAgo = defaultSettings.hideTimeAgo
 }) => {
@@ -16,18 +21,18 @@ const NotificationPopup = ({
             <div
               className="Avava-SP__Image"
               style={{
-                backgroundImage: `url(${notification.productImage})`
+                backgroundImage: `url(${productImage})`
               }}
             ></div>
             <div className="Avada-SP__Content">
               <div className={`Avada-SP__Title ${truncateProductName && 'truncate__title'}`}>
-                {notification.firstName} in {notification.city}, {notification.country}
+                {firstName} in {city}, {country}
               </div>
               <div className={`Avada-SP__Subtitle ${truncateProductName && 'truncate__subtitle'}`}>
-                purchased {notification.productName}
+                purchased {productName}
               </div>
               <div className={'Avada-SP__Footer '}>
-                <div>{hideTimeAgo || untilPresent(notification.timestamp)}</div>
+                <div>{hideTimeAgo || untilPresent(timestamp)}</div>
                 <span className="uni-blue">
                   <i className="fa fa-check" aria-hidden="true">
                     &#x2713;
@@ -56,7 +61,12 @@ const NotificationPopup = ({
 };
 
 NotificationPopup.propTypes = {
-  notification: PropTypes.object,
+  firstName: PropTypes.string,
+  city: PropTypes.string,
+  country: PropTypes.string,
+  productName: PropTypes.string,
+  timestamp: PropTypes.string,
+  productImage: PropTypes.string,
   truncateProductName: PropTypes.bool,
   hideTimeAgo: PropTypes.bool
 };

@@ -19,7 +19,7 @@ export default function Settings() {
     url: '/settings',
     defaultData: defaultSettings
   });
-
+  console.log(input);
   const tabs = [
     {
       id: 'display',
