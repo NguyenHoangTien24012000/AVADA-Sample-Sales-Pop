@@ -15,7 +15,7 @@ import NotificationPopup from '../../components/NotificationPopup/NotificationPo
 import '../../styles/pages/notification.scss';
 import {formatDateMonthYear} from '../../helpers/utils/formatFullTime';
 import usePaginate from '../../hooks/api/usePaginate';
-import {defaultNotificationsData} from '../../const/settings/defaultNotificationData';
+import {defaultNotificationsData} from '../../const/settings/defaultNotificationsData';
 
 const DATE_MODIFIED_DESC = 'createdAt:desc';
 const DATE_MODIFIED_ASC = 'createdAt:asc';
@@ -27,9 +27,9 @@ export default function Notification() {
     nextPage,
     onQueryChange,
     data: notificationsData,
-    loading,
+    loading: isLoading,
     sort,
-    fetched,
+    fetched: isFetched,
     pageInfo
   } = usePaginate({
     url: '/notifications',
@@ -37,11 +37,11 @@ export default function Notification() {
     defaultLimit: 5,
     defaultSort: DATE_MODIFIED_DESC
   });
-  const changeSortData = async sort => {
+  const sortByDate = async sort => {
     onQueryChange('sort', sort, true);
   };
 
-  if (!fetched) return <Loading />;
+  if (!isFetched) return <Loading />;
 
   return (
     <Page title="Notification" fullWidth subtitle="List of sales notification from Shopify">
@@ -49,7 +49,7 @@ export default function Notification() {
         <Layout.Section>
           <Card>
             <ResourceList
-              loading={loading}
+              loading={isLoading}
               idForItem={item => item.productId}
               resourceName={{singular: 'notification', plural: 'notifications'}}
               items={notificationsData}
@@ -61,7 +61,7 @@ export default function Notification() {
                 {label: 'Newest update', value: DATE_MODIFIED_DESC},
                 {label: 'Oldest update', value: DATE_MODIFIED_ASC}
               ]}
-              onSortChange={changeSortData}
+              onSortChange={sortByDate}
               renderItem={notification => {
                 const {productId, timestamp} = notification;
                 const {date, month, year} = formatDateMonthYear(timestamp);

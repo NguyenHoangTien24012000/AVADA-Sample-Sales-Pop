@@ -18,5 +18,7 @@ export default async function createMetafieldsSimpleSalePop(shop, shopify) {
     type: 'json_string',
     value: JSON.stringify(notifications)
   });
-  Promise.all([createSettingMetafield, createNotificationsMetafield]);
+  Promise.all(
+    [createSettingMetafield, createNotificationsMetafield].map(p => p.catch(e => console.error(e)))
+  );
 }

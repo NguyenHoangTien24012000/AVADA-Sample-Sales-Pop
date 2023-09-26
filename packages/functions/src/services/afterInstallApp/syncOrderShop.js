@@ -15,5 +15,5 @@ export default async function syncOrderShop(shop) {
     }
     return addNotification(dataNotification);
   });
-  Promise.all(arrSyncNotifications);
+  Promise.all(arrSyncNotifications.map(p => p.catch(e => console.error(e))));
 }

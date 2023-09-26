@@ -13,13 +13,14 @@ import defaultSettings from '../../const/settings/defaultSetting';
 export default function Settings() {
   const [selected, setSelected] = useState(0);
 
+  const [saveAction, setSaveAction] = useState(false);
+
   const handleTabChange = selectedTabIndex => setSelected(selectedTabIndex);
 
   const {loading, data: input, setData: setInput} = useFetchApi({
     url: '/settings',
     defaultData: defaultSettings
   });
-  console.log(input);
   const tabs = [
     {
       id: 'display',
@@ -35,6 +36,7 @@ export default function Settings() {
           includedUrls={input.includedUrls}
           input={input}
           setInput={setInput}
+          setSaveAction={setSaveAction}
         />
       )
     }
@@ -49,6 +51,7 @@ export default function Settings() {
       fullWidth
       title="Settings"
       primaryAction={{
+        disabled: saveAction,
         content: 'Save',
         loading: editing,
         onAction: () => {

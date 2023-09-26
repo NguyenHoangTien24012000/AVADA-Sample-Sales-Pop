@@ -2,7 +2,7 @@
 
 name = "avada sample sales pop"
 client_id = "297b6bdc4d02e0eeaeca6ef8b051d1a4"
-application_url = "https://indicate-rica-unsubscribe-gl.trycloudflare.com/auth/shopify"
+application_url = "https://holland-willing-listening-turns.trycloudflare.com/auth/shopify"
 embedded = true
 
 [access_scopes]
@@ -11,9 +11,9 @@ use_legacy_install_flow = true
 
 [auth]
 redirect_urls = [
-  "https://indicate-rica-unsubscribe-gl.trycloudflare.com/auth/shopify/callback",
-  "https://indicate-rica-unsubscribe-gl.trycloudflare.com/authSa/shopify/callback",
-  "https://indicate-rica-unsubscribe-gl.trycloudflare.com/auth/shopify/embed/callback",
+  "https://holland-willing-listening-turns.trycloudflare.com/auth/shopify/callback",
+  "https://holland-willing-listening-turns.trycloudflare.com/authSa/shopify/callback",
+  "https://holland-willing-listening-turns.trycloudflare.com/auth/shopify/embed/callback",
   "https://localhost:3000/auth/shopify/callback",
   "https://localhost:3000/authSa/shopify/callback",
   "https://localhost:3000/auth/shopify/embed/callback"
@@ -27,4 +27,4 @@ embedded = false
 
 [build]
 automatically_update_urls_on_dev = true
-dev_store_url = "avada-sample-sales-pop.myshopify.com"
+dev_store_url = "avada-tranning-t7-1.myshopify.com"

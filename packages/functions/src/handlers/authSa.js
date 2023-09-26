@@ -27,7 +27,6 @@ render(app, {
 app.use(createErrorHandler());
 
 // Register all routes for the application
-//todo Sa bị thiếu logic afterInstall 
 app.use(
   shopifyAuth({
     apiKey: shopifyConfig.apiKey,

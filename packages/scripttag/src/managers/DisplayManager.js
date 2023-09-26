@@ -39,7 +39,7 @@ export default class DisplayManager {
     const container = document.querySelector('#Avada-SalePop');
     render(
       <NotificationPopup
-        notification={notification}
+        {...notification}
         position={this.setting.position}
         hideTimeAgo={this.setting.hideTimeAgo}
         truncateProductName={this.setting.truncateProductName}
@@ -58,8 +58,8 @@ export default class DisplayManager {
 
   checkUrlPage() {
     const {includedUrls, excludedUrls, allowShow} = this.setting;
-    const arrIncludedUrls = includedUrls.match(/https?:\/\/([\S]+)/g);
-    const arrExcludedUrls = excludedUrls.match(/https?:\/\/([\S]+)/g);
+    const arrIncludedUrls = includedUrls.match(/https?:\/\/([\S]+)/g) || [];
+    const arrExcludedUrls = excludedUrls.match(/https?:\/\/([\S]+)/g) || [];
     let URL_PAGE = window.location.origin + window.location.pathname;
     if (URL_PAGE.endsWith('/')) {
       URL_PAGE = /(.+(?=\/))/.exec(URL_PAGE)[0];

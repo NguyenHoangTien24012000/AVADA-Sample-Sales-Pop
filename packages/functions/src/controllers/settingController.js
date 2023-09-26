@@ -22,7 +22,6 @@ export async function getSetting(ctx) {
 export async function updateSetting(ctx) {
   try {
     const {data} = ctx.req.body;
-    console.info(data);
     const resUpdate = await settingRepository.updateSetting(data);
     if (resUpdate === null) {
       ctx.status = 404;
