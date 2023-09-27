@@ -34,7 +34,7 @@ export default function Notification() {
   } = usePaginate({
     url: '/notifications',
     defaultData: defaultNotificationsData,
-    defaultLimit: 5,
+    defaultLimit: 3,
     defaultSort: DATE_MODIFIED_DESC
   });
   const sortByDate = async sort => {
@@ -44,7 +44,7 @@ export default function Notification() {
   if (!isFetched) return <Loading />;
 
   return (
-    <Page title="Notification" fullWidth subtitle="List of sales notification from Shopify">
+    <Page title="Notifications" fullWidth subtitle="List of sales notification from Shopify">
       <Layout>
         <Layout.Section>
           <Card>
